@@ -15,6 +15,8 @@ function SignupFormModal() {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
+    const isSignUpFormValid = email.length >= 1 && username.length >= 4 && firstName.length >= 1 && lastName.length >= 1 && password.length >= 6 && confirmPassword.length >= 6;
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
@@ -49,6 +51,7 @@ function SignupFormModal() {
                     Email
                     <input
                         type="text"
+                        placeholder='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -59,6 +62,7 @@ function SignupFormModal() {
                     Username
                     <input
                         type="text"
+                        placeholder='Username'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -69,6 +73,7 @@ function SignupFormModal() {
                     First Name
                     <input
                         type="text"
+                        placeholder='First Name'
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
@@ -79,6 +84,7 @@ function SignupFormModal() {
                     Last Name
                     <input
                         type="text"
+                        placeholder='Last Name'
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         required
@@ -89,6 +95,7 @@ function SignupFormModal() {
                     Password
                     <input
                         type="password"
+                        placeholder='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -99,6 +106,7 @@ function SignupFormModal() {
                     Confirm Password
                     <input
                         type="password"
+                        placeholder='Confirm Password'
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
@@ -107,7 +115,9 @@ function SignupFormModal() {
                 {errors.confirmPassword && (
                     <p>{errors.confirmPassword}</p>
                 )}
-                <button type="submit">Sign Up</button>
+                <button type="submit"
+                    disabled={!isSignUpFormValid}
+                >Sign Up</button>
             </form>
         </div>
     );
