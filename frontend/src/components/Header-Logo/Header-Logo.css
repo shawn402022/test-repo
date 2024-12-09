@@ -3,8 +3,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 40px;
-    background: linear-gradient(to right, #ffffff, #fff5f5);
-    box-shadow: 0 2px 15px rgba(255, 65, 108, 0.1);
+
+
 }
 
 .logo {
@@ -15,5 +15,12 @@
 
 .logo:hover {
     transform: scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 65, 108, 0.2));
+    filter: drop-shadow(0 0 8px rgba(128, 104, 164, 0.616));
+}
+
+
+#faded {
+    width: 75px; /* Adjust this value as needed */
+    height: auto; /* This maintains aspect ratio */
+    object-fit: contain; /* Ensures image scales uniformly */
 }

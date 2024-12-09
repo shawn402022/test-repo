@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { fetchAllSpotsThunk } from '../../store/spots';
 import './SpotsIndex.css';
+//import * as assetImages from '../assets'
 
 const SpotsIndex = () => {
   const dispatch = useDispatch();
   const allSpots = useSelector((state) => state.spots.allSpots);
-
+//console.log(assetImages)
   useEffect(() => {
     dispatch(fetchAllSpotsThunk());
   }, [dispatch]);

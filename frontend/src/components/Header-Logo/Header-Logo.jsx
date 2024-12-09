@@ -5,12 +5,12 @@ const Header = () => {
     return (
         <header className="header">
             <Link to='/'>
-                <img 
-                    src="/src/assets/logo.svg" 
+                <img id='faded'
+                    src="/src/assets/faded-nb.png"
                     alt="Hotspot 2.0 Logo"
                     className="logo"
-                    width="150"
-                    height="40"
+
+
                 />
             </Link>
         </header>

@@ -1,9 +1,10 @@
 /* General Styles */
 body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #fff5f5, #fff);
+      background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), #fff);
       margin: 0;
       padding: 0;
+      transition: all 0.5s ease;
 }
 
 /* Container for the Login Form */
@@ -20,29 +21,31 @@ body {
     font-size: 24px;
     font-weight: 600;
     text-align: center;
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
+    background: linear-gradient(90deg, rgba(148, 112, 219, 0.159), rgba(138, 43, 226, 0.5));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    transition: all 0.5s ease;
 }
 
 /* Form Styles */
 form {
-    max-width: 340px;
+    max-width: 200px;
     width: 85%;
     padding: 20px;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 8px 32px rgba(255, 65, 108, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(147, 112, 219, 0.2);
+    border: 1px solid rgba(148, 112, 219, 0.079);
     border-radius: 15px;
+    transition: all 0.5s ease;
 }
 
 /* Label Styles */
 label {
     font-size: 13px;
     font-weight: 500;
-    color: #2d2d2d;
+    color: #2d2d2d3e;
     margin-bottom: 4px;
 }
 
@@ -56,21 +59,22 @@ input[type="password"] {
     border: 2px solid #f0f0f0;
     border-radius: 8px;
     transition: all 0.2s ease;
-    background: #fafafa;
+    background: #fafafa37;
     box-sizing: border-box;
 }
 
 /* Input Focus Styles */
 input:focus {
-    border-color: #FF416C;
-    box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.1);
+    border-color: rgba(147, 112, 219, 0.5);
+    box-shadow: 0 0 0 3px rgba(147, 112, 219, 0.1);
     transform: translateY(-1px);
-    background: white;
+    background: rgba(255, 255, 255, 0.139);
+    transition: all 0.5s ease;
 }
 
 /* Error Message Styles */
 p {
-    color: red;
+    color: rgba(147, 112, 219, 0.8);
     font-size: 14px;
     margin: 0 0 15px 0;
 }
@@ -79,21 +83,21 @@ p {
 .login-modal button {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
-    color: white;
+    background: linear-gradient(90deg, rgba(148, 112, 219, 0.426), rgba(138, 43, 226, 0.5));
+    color: rgb(28, 27, 28);
     border: none;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
     margin-top: 15px;
 }
 
 /* Button Hover Styles */
 .login-modal button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 65, 108, 0.2);
+    box-shadow: 0 4px 12px rgba(147, 112, 219, 0.3);
 }
 
 button:active {
@@ -102,11 +106,11 @@ button:active {
 
 /* Disabled Button Styles */
 button:disabled {
-      background: linear-gradient(90deg, #e0e0e0, #d0d0d0);
-      transform: none;
+    background: linear-gradient(90deg, rgba(147, 112, 219, 0.3), rgba(138, 43, 226, 0.2));
+    transform: none;
 }
 
 input.error {
-    border-color: #FF416C;
-    background-color: #fff5f5;
+    border-color: rgba(147, 112, 219, 0.5);
+    background-color: rgba(147, 112, 219, 0.1);
 }

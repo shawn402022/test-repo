@@ -1,12 +1,12 @@
 .spot-tile {
     width: 100%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.8s ease; /* Slower transition */
     background: rgba(255, 255, 255, 0.98);
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(255, 65, 108, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(147, 112, 219, 0.5); /* Muted purple with opacity */
+    border: 1px solid rgba(147, 112, 219, 0.5);
 }
 
 .spot-thumbnail {
@@ -15,6 +15,7 @@
     object-fit: cover;
     display: block;
 }
+
 .spot-info {
     padding: 16px;
     display: flex;
@@ -31,14 +32,14 @@
 .spot-location {
     font-size: 13px;
     font-weight: 500;
-    color: #2d2d2d;
+    color: rgba(147, 112, 219, 0.8); /* Muted purple with opacity */
     margin: 0;
 }
 
 .spot-price {
     font-size: 13px;
     font-weight: 500;
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
+    background: linear-gradient(90deg, rgba(147, 112, 219, 0.5), rgba(138, 103, 210, 0.5)); /* Muted purple gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -48,17 +49,18 @@
 .rating {
     font-size: 13px;
     font-weight: 500;
-    color: #2d2d2d;
+    color: rgba(147, 112, 219, 0.8); /* Muted purple with opacity */
     display: flex;
     align-items: center;
     gap: 4px;
     margin-left: auto;
 }
+
 .rating svg {
-    color: #FF416C;
+    color: rgba(147, 112, 219, 0.5); /* Muted purple with opacity */
 }
 
 .spot-tile:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 65, 108, 0.2);
+    box-shadow: 0 5px 15px rgba(147, 112, 219, 0.5); /* Muted purple with opacity */
 }

@@ -58,8 +58,8 @@ textarea {
 /* Input Focus Styles */
 input:focus,
 textarea:focus {
-  border-color: #FF416C;
-  box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.1);
+  border-color: #9370DB;
+  box-shadow: 0 0 0 3px rgba(147, 112, 219, 0.1);
   transform: translateY(-1px);
   background: white;
 }
@@ -83,7 +83,7 @@ section p {
 
 /* Error Message Styles */
 .error {
-  color: #ff4b2b;
+  color: #8B4513;
   font-size: 12px;
   margin-top: 5px;
 }
@@ -92,7 +92,7 @@ section p {
 button {
   width: 100%;
   padding: 12px;
-  background: #ff4b2b;
+  background: #9370DB;
   color: white;
   border: none;
   border-radius: 4px;
@@ -101,7 +101,7 @@ button {
 
 /* Button Hover Styles */
 button:hover {
-  background: #ff416c;
+  background: #8A2BE2;
 }
 .create-spot-container {
   max-width: 800px;
@@ -109,7 +109,7 @@ button:hover {
   padding: 30px;
   background: rgba(255, 255, 255, 0.98);
   border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(255, 65, 108, 0.12);
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.12);
 }
 
 .image-inputs {
@@ -120,7 +120,7 @@ button:hover {
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, #FF416C, #FF4B2B);
+  background: linear-gradient(90deg, #9370DB, #8A2BE2);
   margin: 25px 0;
   opacity: 0.2;
 }

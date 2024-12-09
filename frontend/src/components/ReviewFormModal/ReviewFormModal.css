@@ -1,21 +1,26 @@
 .review-form-modal {
   padding: 20px;
   width: 400px;
+  background-color: rgba(147, 112, 219, 0.1);
+  transition: all 0.5s ease;
 }
 
 .review-form-modal h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: rgba(147, 112, 219, 0.8);
 }
 
 .review-form-modal textarea {
   width: 100%;
   min-height: 120px;
   padding: 12px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid rgba(147, 112, 219, 0.5);
   border-radius: 8px;
   resize: vertical;
   margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
+  transition: all 0.5s ease;
 }
 
 .stars-input {
@@ -28,16 +33,16 @@
 .star {
   font-size: 24px;
   cursor: pointer;
-  color: #ddd;
-  transition: color 0.2s ease;
+  color: rgba(147, 112, 219, 0.3);
+  transition: color 0.5s ease;
 }
 
 .star.filled {
-  color: #FF416C;
+  color: rgba(147, 112, 219, 0.8);
 }
 
 .error {
-  color: #ff4b2b;
+  color: rgba(147, 112, 219, 0.7);
   margin: 10px 0;
   text-align: center;
 }
@@ -45,14 +50,20 @@
 button {
   width: 100%;
   padding: 12px;
-  background: #ff4b2b;
+  background: rgba(147, 112, 219, 0.5);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+button:hover {
+  background: rgba(147, 112, 219, 0.7);
+  box-shadow: 0 0 15px rgba(147, 112, 219, 0.4);
 }
 
 button:disabled {
-  background: #cccccc;
+  background: rgba(147, 112, 219, 0.3);
   cursor: not-allowed;
 }

@@ -1,38 +1,38 @@
 :root {
-  /* Color Palette */
-  --primary-gradient: linear-gradient(90deg, #FF416C, #FF4B2B);
-  --primary-color: #FF416C;
-  --secondary-color: #FF4B2B;
-  --background-gradient: linear-gradient(135deg, #fff5f5, #fff);
-  --text-primary: #2d2d2d;
-  --text-secondary: #666666;
-  --error-color: #ff4b2b;
-  --success-color: #34D399;
-  --border-color: #f0f0f0;
-  --shadow-color: rgba(255, 65, 108, 0.12);
-  
+  /* Color Palette - Changed to muted purple */
+  --primary-gradient: linear-gradient(90deg, rgba(128, 100, 162, 0.5), rgba(147, 112, 219, 0.5));
+  --primary-color: rgba(128, 100, 162, 0.5);
+  --secondary-color: rgba(147, 112, 219, 0.5);
+  --background-gradient: linear-gradient(135deg, rgba(242, 240, 250, 0.5), rgba(255, 255, 255, 0.5));
+  --text-primary: rgba(45, 45, 45, 0.8);
+  --text-secondary: rgba(102, 102, 102, 0.7);
+  --error-color: rgba(178, 34, 34, 0.5);
+  --success-color: rgba(52, 211, 153, 0.5);
+  --border-color: rgba(240, 240, 245, 0.5);
+  --shadow-color: rgba(128, 100, 162, 0.12);
+
   /* Typography */
   --font-family: 'Helvetica Neue', Arial, sans-serif;
   --heading-large: 28px;
   --heading-medium: 20px;
   --text-regular: 16px;
   --text-small: 13px;
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 15px;
-  
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
+
+  /* Transitions - Slowed down */
+  --transition-fast: 0.4s ease;
+  --transition-normal: 0.6s ease;
 }
 
 body {
@@ -65,11 +65,30 @@ button {
   padding: var(--spacing-md) var(--spacing-lg);
   font-weight: 600;
   cursor: pointer;
-  transition: transform var(--transition-normal), 
+  transition: transform var(--transition-normal),
               box-shadow var(--transition-normal);
 }
 
+.auth-button {
+  background: linear-gradient(90deg, rgba(128, 100, 162, 0.5), rgba(147, 112, 219, 0.5));
+  box-shadow: 0 4px 12px rgba(128, 100, 162, 0.2);
+}
+
+.auth-button:hover {
+  box-shadow: 0 4px 12px rgba(128, 100, 162, 0.3);
+}
+
+.card {
+  box-shadow: 0 8px 32px rgba(128, 100, 162, 0.12);
+}
+
+input:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(128, 100, 162, 0.12);
+}
+
 button:hover {
+  box-shadow: 0 5px 15px rgba(128, 100, 162, 0.12);
+}button:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px var(--shadow-color);
 }

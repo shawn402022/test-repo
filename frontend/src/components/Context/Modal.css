@@ -7,15 +7,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 10px rgba(128, 100, 162, 0.3);
   }
-  
+
   #modal-background {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(128, 100, 162, 0.7);
   }
   #modal-content {
     position: absolute;
@@ -23,4 +24,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding-top: 0;
+    box-shadow: 0 4px 8px rgba(128, 100, 162, 0.4);
+    background-color: rgba(245, 240, 255, 0.95);
   }

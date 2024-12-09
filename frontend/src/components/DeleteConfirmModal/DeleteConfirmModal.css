@@ -4,12 +4,12 @@
     padding: 25px 20px 35px 20px;
     background: rgba(255, 255, 255, 0.98);
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(255, 65, 108, 0.12);
+    box-shadow: 0 8px 32px rgba(147, 112, 219, 0.12);
     width: 400px;
 }
 
 .delete-confirm-modal h2 {
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
+    background: linear-gradient(90deg, #9370DB, #8B6FC3);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -33,14 +33,15 @@
 }
 
 .delete-button {
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
+    background: linear-gradient(90deg, #9470dbd1, #8B6FC3);
     color: white;
     border: none;
     cursor: pointer;
+    padding:10px 0px
 }
 
 .cancel-button {
-    background: linear-gradient(90deg, #666, #444);
+    background: linear-gradient(90deg, #B8A2D4, #9F8AC1);
     color: white;
     border: none;
     cursor: pointer;

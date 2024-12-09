@@ -1,28 +1,33 @@
 .spots-grid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 32px;
   padding: 40px;
   max-width: 1600px;
   margin: 0 auto;
-  background: linear-gradient(135deg, #fff5f5, #fff);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 0.5), rgba(230, 230, 250, 0.5));
+  transition: all 0.5s ease;
 }
 
 .spot-link {
   text-decoration: none;
-  color: inherit;
+  color: rgba(147, 112, 219, 0.8);
   display: block;
+  transition: all 0.5s ease;
 }
 
 .spot-tile {
-background: white;
-border-radius: var(--radius-lg);
-padding: var(--spacing-md);
-box-shadow: 0 8px 32px var(--shadow-color);
-transition: transform var(--transition-normal);
+  background: rgba(230, 230, 250, 0.5);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.3);
+  transition: all 0.5s ease;
 }
 
 .spot-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(147, 112, 219, 0.4);
+}
 
 .spot-details {
   display: flex;
@@ -43,11 +48,26 @@ transition: transform var(--transition-normal);
       gap: 20px;
   }
 }
-  transform: translateY(-4px);
-}
 
 .spot-image {
   width: 100%;
+}
+
+.spot-location {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(147, 112, 219, 0.8);
+}
+
+.spot-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(147, 112, 219, 0.9);
+}
+
+.spot-rating {
+  color: rgba(147, 112, 219, 0.8);
+}
   height: 280px;
   object-fit: cover;
   border-radius: 12px;
