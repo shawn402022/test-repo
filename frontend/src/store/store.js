@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
+import { spotReducer } from './spotReducer';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
-  session:sessionReducer
+  session:sessionReducer,
+  spots:spotReducer
 });
 
 let enhancer;
@@ -16,9 +18,12 @@ if (import.meta.env.MODE === "production") {
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 }
-
+//  single object that holds the entire application state, theres one store in one application state
 const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
+
+
+
 
 export default configureStore;
