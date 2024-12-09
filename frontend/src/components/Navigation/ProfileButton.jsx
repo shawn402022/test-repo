@@ -1,86 +1,80 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
+import { FaCircleUser, FaBars } from 'react-icons/fa6';
 import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton';
-import LoginFormModal from '../LoginFormModal';
-import SignUpFormModal from '../SignUpFormModal';
+import OpenModalMenuItem from './OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import SignupFormModal from '../SignupFormModal/SignupFormModal';
 
-function ProfileButton({ user }) {
-    const dispatch = useDispatch();
-    const [showMenu, setShowMenu] = useState(false);
-    const ulRef = useRef();
+const ProfileButton = ({ user }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
-    const toggleMenu = (e) => {
-        e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-        setShowMenu(!showMenu);
+  const toggleMenu = (e) => {
+    e.stopPropagation();
+    setShowMenu((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
     };
 
-    useEffect(() => {
-        if (!showMenu) return;
+    document.addEventListener('click', closeMenu);
 
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                setShowMenu(false);
-            }
-        };
+    return () => document.removeEventListener('click', closeMenu);
+  }, [showMenu]);
 
-        document.addEventListener('click', closeMenu);
+  const closeMenu = () => setShowMenu(false);
 
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logoutThunk());
+    closeMenu();
+    navigate('/');
+  };
 
-    const closeMenu = () => setShowMenu(false);
+  const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
 
-    const logout = (e) => {
-        e.preventDefault();
-        dispatch(sessionActions.logout());
-        closeMenu();
-    };
-
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-
-    return (
-        <div>
-            <div>
-            <button className='userButton' onClick={toggleMenu}>
-                <FaUserCircle />
+  return (
+    <>
+      <button onClick={toggleMenu} className="profile-trigger">
+        <FaBars className="menu-bars" />
+        <FaCircleUser />
+      </button>
+      <ul className={ulClassName} ref={ulRef}>
+        {user ? (
+          <>
+            <span className="user-info">Hello, {user.firstName}</span>
+            <span className="user-email">{user.email}</span>
+            <button className="logout-button" onClick={logout}>
+              Log Out
             </button>
-            </div>
-
-            <ul className={ulClassName} ref={ulRef}>
-                {user ? (
-                    <div>
-                        <li>{user.username}</li>
-                        <li>{`Hello ${user.firstName}`}</li>
-                        <li>{`Logged in as ${user.email}`}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
-                        </li>
-                    </div>
-                ) : (
-                    <div>
-                        <li>
-                            <OpenModalButton
-                                buttonText="Log In"
-                                onButtonClick={closeMenu}
-                                modalComponent={<LoginFormModal />}
-                            />
-                        </li>
-                        <li>
-                            <OpenModalButton
-                                buttonText="Sign Up"
-                                onButtonClick={closeMenu}
-                                modalComponent={<SignUpFormModal />}
-                            />
-                        </li>
-                    </div>
-                )}
-            </ul>
-        </div>
-    );
-}
+          </>
+        ) : (
+          <>
+            <OpenModalMenuItem
+              itemText="Sign Up"
+              onItemClick={closeMenu}
+              modalComponent={<SignupFormModal />}
+            />
+            <OpenModalMenuItem
+              itemText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+          </>
+        )}
+      </ul>
+    </>
+  );
+};
 
 export default ProfileButton;

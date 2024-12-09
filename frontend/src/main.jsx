@@ -1,31 +1,22 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './index.css';
 import { Provider } from 'react-redux';
-import configureStore from './store';
-import { restoreCSRF, csrfFetch } from './store/csrf';
-import * as sessionActions from './store/session';
-import { Modal, ModalProvider } from './context/Modal';
+import  Modal  from './components/Context/Modal';
+import  ModalProvider  from './components/Context/ModalContext';
+import configureStore from './store/store';
+import './index.css';
 
 const store = configureStore();
 
-if (import.meta.env.MODE !== 'production') {
-  restoreCSRF();
-
-  window.csrfFetch = csrfFetch;
-  window.store = store;
-  window.sessionActions = sessionActions;
-}
-
+// Create root and render application
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ModalProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ModalProvider>
         <App />
         <Modal />
-      </Provider>
-    </ModalProvider>
+      </ModalProvider>
+    </Provider>
   </React.StrictMode>
 );

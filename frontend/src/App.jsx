@@ -1,26 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import * as sessionActions from './store/session';
-
-function Layout() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => {
-      setIsLoaded(true)
-    });
-  }, [dispatch]);
-
-  return (
-    <div>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
-    </div>
-  );
-}
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from '../src/Layout';
+import SpotsIndex from './components/SpotsIndex/SpotsIndex';
+import SpotDetails from './components/SpotDetails/SpotDetails';
+import CreateSpotForm from './components/CreateSpotForm/CreateSpotForm';
+import ManageSpots from './components/ManageSpots/ManageSpots';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +11,26 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
-      }
-    ]
-  }
+        element: <SpotsIndex />,
+      },
+      {
+        path: '/spots/current',
+        element: <ManageSpots />,
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetails />,
+      },
+      {
+        path: '/spots/new',
+        element: <CreateSpotForm />,
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <CreateSpotForm />,
+      },
+    ],
+  },
 ]);
 
 function App() {

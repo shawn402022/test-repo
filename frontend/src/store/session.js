@@ -1,91 +1,97 @@
-// frontend/src/store/session.js
+import { csrfFetch, restoreCSRF } from './csrf';
 
-import { csrfFetch } from './csrf';
+//!ACTION TYPES:
+const SET_SESSION_USER = 'session/setSessionUser';
+const REMOVE_SESSION_USER = 'session/removeSessionUser';
 
-const SET_USER = "session/setUser";
-const REMOVE_USER = "session/removeUser";
-
-const setUser = (user) => {
-    return {
-        type: SET_USER,
-        payload: user
-    };
+//!ACTION CREATORS:
+const setSessionUser = (user) => {
+  return {
+    type: SET_SESSION_USER,
+    payload: user,
+  };
 };
 
-const removeUser = () => {
-    return {
-        type: REMOVE_USER
-    };
+const removeSessionUser = () => {
+  return {
+    type: REMOVE_SESSION_USER,
+  };
 };
 
-export const login = (user) => async (dispatch) => {
-    const { credential, password } = user;
-    const response = await csrfFetch("/api/session", {
-        method: "POST",
-        body: JSON.stringify({
-            credential,
-            password
-        })
-    });
-    const data = await response.json();
-    dispatch(setUser(data.user));
-    return response;
+//!THUNK ACTIONS:
+export const loginThunk = (user) => async (dispatch) => {
+  await restoreCSRF();
+
+  const { credential, password } = user;
+
+  const response = await csrfFetch('/api/session', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      credential,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+  dispatch(setSessionUser(data.user));
+  return response;
 };
 
-export const logout = () => async (dispatch) => {
-    const response = await csrfFetch('/api/session', {
-        method:'DELETE'
-    });
-    dispatch(removeUser());
-    return response
-}
-
-export const signup = (user) => async (dispatch) => {
-
-    const { username, firstName, lastName, email, password } = user;
-    const response = await csrfFetch("/api/users", {
-
-
-        method: "POST",
-        body: JSON.stringify({
-            username,
-            firstName,
-            lastName,
-            email,
-            password
-        })
-
-    });
-    console.log('Response received')
-    const data = await response.json();
-    console.log('data parsed')
-    dispatch(setUser(data.user));
-    return response;
+export const restoreUserThunk = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session');
+  const data = await response.json();
+  dispatch(setSessionUser(data.user));
+  return response;
 };
 
+export const signupThunk = (user) => async (dispatch) => {
+  const { username, firstName, lastName, email, password } = user;
+  const response = await csrfFetch('/api/users', {
+    method: 'POST',
+    body: JSON.stringify({
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+    }),
+  });
+  const data = await response.json();
+  dispatch(setSessionUser(data.user));
+  return response;
+};
 
+export const logoutThunk = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(removeSessionUser());
+  return response;
+};
 
-const initialState = { user: null };
+//!INITIAL STATE:
+const initialState = {
+  user: null,
+};
 
+//!REDUCERS:
 const sessionReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case SET_USER:
-            return { ...state, user: action.payload };
-        case REMOVE_USER:
-            return { ...state, user: null };
-        default:
-            return state;
-    }
+  const handlers = {
+    [SET_SESSION_USER]: (state, action) => ({
+      ...state,
+      user: action.payload,
+    }),
+    [REMOVE_SESSION_USER]: (state) => ({
+      ...state,
+      user: null,
+    }),
+  };
+  const handler = handlers[action.type];
+
+  return handler ? handler(state, action) : state;
 };
-
-
-export const restoreUser = () => async (dispatch) => {
-    const response = await csrfFetch("/api/session");
-    const data = await response.json();
-    dispatch(setUser(data.user));
-    return response;
-};
-
-
 
 export default sessionReducer;

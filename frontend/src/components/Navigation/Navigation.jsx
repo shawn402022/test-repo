@@ -1,25 +1,35 @@
-
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { GiSmokeBomb } from 'react-icons/gi';
-import ProfileButton from './ProfileButton';
+import { Link } from 'react-router-dom';
+import Header from '../Header-Logo/Header-Logo';
 import './Navigation.css';
+import ProfileButton from './ProfileButton';
 
 function Navigation({ isLoaded }) {
-    const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
-    return (
-        <ul className='navBar'>
-            <li className='smokeBomb'>
-                <NavLink to="/"><GiSmokeBomb className="smoke"/></NavLink>
+  return (
+    <nav>
+      <ul className="nav-list">
+        {isLoaded && (
+          <>
+            <li>
+              <Header />
             </li>
-            {isLoaded && (
-                <li>
-                    <ProfileButton user={sessionUser} />
-                </li>
-            )}
-        </ul>
-    );
+            <div className="nav-right">
+              {sessionUser && (
+                <Link to="/spots/new" className="create-spot-button">
+                  Create a New Spot
+                </Link>
+              )}
+              <div className="profile-button-container">
+                <ProfileButton user={sessionUser} />
+              </div>
+            </div>
+          </>
+        )}
+      </ul>
+    </nav>
+  );
 }
 
 export default Navigation;
