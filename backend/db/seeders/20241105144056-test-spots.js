@@ -35,7 +35,7 @@ module.exports = {
         "price": 123,
       },
       {
-        "ownerId": 1,
+        "ownerId": 3,
         "address": "manes lane",
         "city": "deleware",
         "state": "pa",
@@ -47,7 +47,7 @@ module.exports = {
         "price": 123,
       },
       {
-        "ownerId": 1,
+        "ownerId": 4,
         "address": "staten island",
         "city": "new york",
         "state": "new york",
@@ -59,7 +59,7 @@ module.exports = {
         "price": 123,
       },
       {
-        "ownerId": 1,
+        "ownerId": 5,
         "address": "123 Dfor five lane",
         "city": "San Francisco",
         "state": "California",
@@ -71,7 +71,7 @@ module.exports = {
         "price": 123,
       },
       {
-        "ownerId": 1,
+        "ownerId": 6,
         "address": "jersey city ",
         "city": "jersey city" ,
         "state": "new jersey ",

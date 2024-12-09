@@ -18,6 +18,8 @@ const CreateSpotForm = () => {
     price: '',
     previewImage: '',
     images: ['', '', '', ''],
+    latitude: "",
+    longitude: ""
   });
 
   const [errors, setErrors] = useState({});
