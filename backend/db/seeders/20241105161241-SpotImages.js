@@ -23,8 +23,8 @@ module.exports = {
     await SpotImage.bulkCreate([
         {
           spotId: 1,
-          url: 'testUrl.com',
-          preview:true    
+          url: '/home/shawn/Projects/Faded-bed-n-breakfast/frontend/src/assets/villa 1.jpg',
+          preview:true
         }
     ], { validate: true });
 
