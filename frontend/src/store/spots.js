@@ -4,6 +4,7 @@ import { csrfFetch } from './csrf';
 const GET_ALL_SPOTS = 'spots/getAllSpots';
 const GET_SINGLE_SPOT = 'spots/getSingleSpot';
 const CREATE_SPOT = 'spots/createSpot';
+const UPDATE_SPOT = 'spots/updateSpot';
 const DELETE_SPOT = 'spots/deleteSpot';
 
 //!ACTION CREATORS:
@@ -45,6 +46,17 @@ export const fetchSingleSpotThunk = (spotId) => async (dispatch) => {
 export const createSpotThunk = (spotData) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
+        body: JSON.stringify(spotData),
+    });
+
+    const newSpot = await response.json();
+    dispatch(createSpot(newSpot));
+    return newSpot;
+};
+
+export const updateSpotThunk = (spotId, spotData) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
         body: JSON.stringify(spotData),
     });
 
@@ -95,6 +107,13 @@ const spotsReducer = (state = initialState, action) => {
               [action.spot.id]: action.spot,
           },
       }),
+      // [UPDATE_SPOT]: (state, action) => ({
+      //     ...state,
+      //     allSpots: {
+      //         ...state.allSpots,
+      //         [action.spot.id]: action.spot,
+      //     },
+      // }),
       [DELETE_SPOT]: (state, action) => {
           const newAllSpots = { ...state.allSpots };
           delete newAllSpots[action.spotId];

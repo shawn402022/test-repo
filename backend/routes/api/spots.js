@@ -266,14 +266,14 @@ const validateEdit = [
         .optional()
         .exists({ checkFalsy: true })
         .withMessage("country is required"),
-    check('lat')
-        .optional()
-        .isLength({min: 6})
-        .withMessage("Latitude is not valid"),
-    check('lng')
-        .optional()
-        .isLength({min: 6})
-        .withMessage("Longitude is not valid"),
+    // check('lat')
+    //     .optional()
+    //     .isLength({min: 6})
+    //     .withMessage("Latitude is not valid"),
+    // check('lng')
+    //     .optional()
+    //     .isLength({min: 6})
+    //     .withMessage("Longitude is not valid"),
     check('description')
         .optional()
         .isLength({min: 6})
@@ -292,7 +292,7 @@ const validateEdit = [
 //Edit a spot
 router.put('/:spotId', requireAuth, validateEdit,async(req, res) => {
     const spotIdParam = req.params.spotId;
-    const {address, city, state, country, lat,lng, name, description, price} = req.body;
+    const {address, city, state, country, lat,lng, name, description, price, previewImage} = req.body;
 
     const spot = await Spot.findByPk(spotIdParam);
 
@@ -301,7 +301,7 @@ router.put('/:spotId', requireAuth, validateEdit,async(req, res) => {
     }
 
     //Check if spot belongs to current user
-    if(spot.ownerId !== req.review.id) {
+    if(spot.ownerId !== req.body.ownerId) {
         return res.status(400).json({message:"bad request"});
     } else if(!validateCreate) {
         return res.status(400).json({message:"bad validate"});
@@ -313,7 +313,8 @@ router.put('/:spotId', requireAuth, validateEdit,async(req, res) => {
         state,country,
         lat, lng,
         name, description,
-        price
+        price,
+        previewImage: [previewImage]
     });
 
     return res.status(200).json(spot);
@@ -397,22 +398,22 @@ const validateQuery = [
         .optional()
         .isFloat({ min: 1 })
         .withMessage("Size must be greater than or equal to 1"),
-    check('minLat')
-        .optional()
-        .isFloat({ min: 6.0})
-        .withMessage("Minimum Latitude is invalid"),
-    check('maxLat')
-        .optional()
-        .isFloat({ max:12.0})
-        .withMessage("Maximum Latitude is invalid"),
-    check('minLng')
-        .optional()
-        .isFloat({ min: 6.0})
-        .withMessage("Minimum Longitude is invalid"),
-    check('maxLat')
-        .optional()
-        .isFloat({ max: 13.0 })
-        .withMessage("Maximum Longitude is invalid"),
+    // check('minLat')
+    //     .optional()
+    //     .isFloat({ min: 6.0})
+    //     .withMessage("Minimum Latitude is invalid"),
+    // check('maxLat')
+    //     .optional()
+    //     .isFloat({ max:12.0})
+    //     .withMessage("Maximum Latitude is invalid"),
+    // check('minLng')
+    //     .optional()
+    //     .isFloat({ min: 6.0})
+    //     .withMessage("Minimum Longitude is invalid"),
+    // check('maxLat')
+    //     .optional()
+    //     .isFloat({ max: 13.0 })
+    //     .withMessage("Maximum Longitude is invalid"),
     check('price')
         .optional()
         .isFloat({ max: 0 })
@@ -460,12 +461,12 @@ const validateCreate = [
     check('country')
         .exists({ checkFalsy: true })
         .withMessage("country is required"),
-    check('lat')
-        .isLength({min: 6})
-        .withMessage("Latitude is not valid"),
-    check('lng')
-        .isLength({min: 6})
-        .withMessage("Longitude is not valid"),
+    // check('lat')
+    //     .isLength({min: 6})
+    //     .withMessage("Latitude is not valid"),
+    // check('lng')
+    //     .isLength({min: 6})
+    //     .withMessage("Longitude is not valid"),
     check('description')
         .isLength({min: 6})
         .withMessage("Description is required"),

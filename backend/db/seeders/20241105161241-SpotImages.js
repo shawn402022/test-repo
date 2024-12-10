@@ -23,9 +23,37 @@ module.exports = {
     await SpotImage.bulkCreate([
         {
           spotId: 1,
-          url: '/home/shawn/Projects/Faded-bed-n-breakfast/frontend/src/assets/villa 1.jpg',
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
           preview:true
         }
+
+        {
+          spotId: 2,
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
+          preview:true
+        }
+         /*
+        {
+          spotId: 1,
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
+          preview:true
+        }
+        {
+          spotId: 1,
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
+          preview:true
+        }
+        {
+          spotId: 1,
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
+          preview:true
+        }
+        {
+          spotId: 1,
+          url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
+          preview:true
+        }
+          */
     ], { validate: true });
 
     await updateAllSpotPreviews()

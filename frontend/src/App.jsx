@@ -2,8 +2,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from '../src/Layout';
 import SpotsIndex from './components/SpotsIndex/SpotsIndex';
 import SpotDetails from './components/SpotDetails/SpotDetails';
-import CreateSpotForm from './components/CreateSpotForm/CreateSpotForm';
 import ManageSpots from './components/ManageSpots/ManageSpots';
+import CreateSpot from './components/CreateSpot/CreateSpot';
+import EditSpot from './components/EditSpot/EditSpot';
 
 const router = createBrowserRouter([
   {
@@ -23,11 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/new',
-        element: <CreateSpotForm />,
+        element: <CreateSpot />,
       },
       {
         path: '/spots/:spotId/edit',
-        element: <CreateSpotForm />,
+        element: <EditSpot />,
       },
     ],
   },

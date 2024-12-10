@@ -53,10 +53,10 @@ const SpotDetails = () => {
   const reviewSummary = () => {
     if (!numReviews) return 'New';
     return (
-      <>
+      <div>
         {Number(avgRating).toFixed(1)} · {numReviews}{' '}
         {numReviews === 1 ? 'Review' : 'Reviews'}
-      </>
+      </div>
     );
   };
 

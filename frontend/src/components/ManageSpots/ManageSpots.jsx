@@ -18,12 +18,15 @@ const ManageSpots = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchAllSpotsThunk());
-  }, [dispatch]);
+    fetchAllSpotsThunk();
+    //dispatch(fetchAllSpotsThunk());
+  }, []);
+
 
   const handleDelete = (spotId) => async () => {
-    await dispatch(deleteSpotThunk(spotId));
-    dispatch(fetchAllSpotsThunk());
+    console.log(spotId)
+    // await dispatch(deleteSpotThunk(spotId));
+    // dispatch(fetchAllSpotsThunk());
   };
 
   if (!user) {
@@ -33,34 +36,38 @@ const ManageSpots = () => {
 
   return (
     <div className="manage-spots">
+    
       <h1>Manage Spots</h1>
-      {userSpots.length === 0 ? (
+
+
         <button onClick={() => navigate('/spots/new')} className="create-spot-button">
           Create a New Spot
         </button>
-      ) : (
         <div className="spots-grid">
-          {userSpots.map((spot) => (
+        {userSpots.map((spot) => (
             <div key={spot.id} className="spot-tile-container">
               <SpotTile spot={spot} />
               <div className="spot-actions">
-                <button onClick={() => navigate(`/spots/${spot.id}/edit`)}>
+                <button className='edit-button' onClick={() => navigate(`/spots/${spot.id}/edit`)}>
                   Update
                 </button>
-                <OpenModalButton
+                <OpenModalButton className='delete-button'
                   buttonText="Delete"
                   modalComponent={
                     <DeleteConfirmModal
-                      onDelete={handleDelete(spot.id)}
+                      onDelete={() => handleDelete(spot.id)}
                       type="Spot"
                     />
                   }
                 />
               </div>
             </div>
+
           ))}
+
         </div>
-      )}
+
+
     </div>
   );
 };

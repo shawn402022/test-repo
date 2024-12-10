@@ -20,7 +20,7 @@ const LoginFormModal = () => {
 
     e.preventDefault();
     setErrors({});
-  
+
     try {
       await dispatch(sessionActions.loginThunk({ credential, password }));
       resetForm();
@@ -39,7 +39,7 @@ const LoginFormModal = () => {
     dispatch(
       sessionActions.loginThunk({
         credential: 'Demo-lition',
-        password: 'password1',
+        password: 'password',
       }),
     ).then(closeModal);
   };

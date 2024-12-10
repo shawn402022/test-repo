@@ -1,10 +1,11 @@
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import './SpotTile.css';
+import ManageSpots from '../ManageSpots/ManageSpots';
 
 const SpotTile = ({ spot }) => {
   const navigate = useNavigate();
-  const defaultImage = 'https://placehold.co/600x400?text=No+Image';
+  const defaultImage = 'https://i.ibb.co/WnFbjJB/villa-1.jpg';
 
   const imageUrl =
     spot.previewImage || spot.SpotImages?.[0]?.url || defaultImage;
@@ -27,6 +28,7 @@ const SpotTile = ({ spot }) => {
           <p className="spot-location">{spot.city}, {spot.state}</p>
           <p className="spot-price">${spot.price} night</p>
         </div>
+        <ManageSpots/>
         <span className="rating">
           <FaStar /> {spot.avgRating ? Number(spot.avgRating).toFixed(1) : 'New'}
         </span>
