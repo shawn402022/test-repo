@@ -25,7 +25,7 @@ module.exports = {
           spotId: 1,
           url: 'https://i.ibb.co/WnFbjJB/villa-1.jpg',
           preview:true
-        }
+        },
 
         {
           spotId: 2,
