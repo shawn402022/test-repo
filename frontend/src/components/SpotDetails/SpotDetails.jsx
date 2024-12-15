@@ -7,6 +7,8 @@ import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 import './SpotDetails.css';
+import ReviewSummary from '../ReviewSummary/ReviewSummary';
+import SpotReviews from '../SpotReviews/SpotReviews';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
@@ -50,20 +52,10 @@ const SpotDetails = () => {
   //   return new Date(date).toLocaleDateString('en-US', options);
   // };
 
-  const reviewSummary = () => {
-    if (!numReviews) return 'New';
-    return (
-      <div>
-        {Number(avgRating).toFixed(1)} · {numReviews}{' '}
-        {numReviews === 1 ? 'Review' : 'Reviews'}
-      </div>
-    );
-  };
 
-  const handleDeleteReview = (reviewId) => async () => {
-    await dispatch(deleteReviewThunk(reviewId));
-    dispatch(fetchSingleSpotThunk(spotId));
-  };
+
+
+
 
   return (
     <div className="spot-details">
@@ -105,7 +97,7 @@ const SpotDetails = () => {
               </div>
               <div className="rating-line">
                 <i className="fas fa-star"></i>
-                {reviewSummary()}
+                <ReviewSummary numReviews={numReviews} avgRating={avgRating}/>
               </div>
             </div>
             <button onClick={isComingSoon}>Reserve</button>
@@ -113,7 +105,8 @@ const SpotDetails = () => {
         </div>
         <div className="reviews-section">
           <h2 className="reviews-header">
-            <i className="fas fa-star"></i> {reviewSummary()}
+            <i className="fas fa-star"></i>
+            <ReviewSummary numReviews={numReviews} avgRating={avgRating}/>
           </h2>
 
           {canReview && (
@@ -129,18 +122,8 @@ const SpotDetails = () => {
               }
             />
           )}
+          <SpotReviews reviews={reviews} userId={user.id} spotId={spot.id}/>
 
-          {user?.id === reviews.userId && (
-            <OpenModalButton
-              buttonText="Delete"
-              modalComponent={
-                <DeleteConfirmModal
-                  onDelete={handleDeleteReview(reviews.id)}
-                  type="Review"
-                />
-              }
-            />
-          )}
         </div>
       </div>
     </div>

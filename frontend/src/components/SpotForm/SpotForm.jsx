@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { createSpotThunk } from '../../store/spots';
 import './SpotForm.css';
 import { validateForm } from './helpers';
+import PhotoSection from './PhotoSection';
 
 
 const SpotForm = ({action= 'Create', data, onSubmit}) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(data);
 
@@ -160,6 +156,7 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
         </section>
         <button type="submit">{action} Spot</button>
       </form>
+      <PhotoSection spotId={data.id} />
     </div>
   );
 };

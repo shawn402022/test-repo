@@ -43,6 +43,21 @@ export const fetchSingleSpotThunk = (spotId) => async (dispatch) => {
   return spot;
 };
 
+export const addSpotImageThunk = (imageData, spotId) => async () => {
+  console.log(imageData)
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        body: JSON.stringify(imageData),
+
+
+    });
+    return response
+    /*
+    const newSpot = await response.json();
+    dispatch(createSpot(newSpot));
+    return newSpot;
+    */
+};
 export const createSpotThunk = (spotData) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
@@ -69,7 +84,7 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'DELETE'
     });
-    
+
     if (response.ok) {
         dispatch(deleteSpot(spotId));
         return true;
@@ -128,6 +143,3 @@ const spotsReducer = (state = initialState, action) => {
 };
 
 export default spotsReducer;
-
-
-

@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import SpotForm from "../SpotForm/SpotForm";
 import { createSpotThunk } from "../../store/spots";
+import { useNavigate } from "react-router-dom";
 
 const data = {
     country: '',
@@ -18,7 +19,7 @@ const data = {
 
 export default function CreateSpot() {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const onSubmit = async (formData) => {
         try {
             const newSpot = await dispatch(createSpotThunk(formData));
