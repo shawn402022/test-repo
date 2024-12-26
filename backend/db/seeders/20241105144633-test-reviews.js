@@ -4,7 +4,7 @@ const { Review, Spot } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  
+  options.schema = process.env.SCHEMA;
 }
 
 //allow avgRating to be updated with seeder
@@ -23,13 +23,13 @@ module.exports = {
           spotId: 1,
           userId:1,
           review: 'test review 1',
-          stars: 3.5   
+          stars: 3.5
         },
         {
-          spotId: 1,
+          spotId: 2,
           userId:1,
           review: 'test review 2',
-          stars: 4.6  
+          stars: 4.6
         }
     ], { validate: true });
 

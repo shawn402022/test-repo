@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-
+    /*
     async assignPreview(){
       //get all preview images
       const previews =await this.getSpotImages({
@@ -20,14 +20,15 @@ module.exports = (sequelize, DataTypes) => {
       this.previewImage = urls;
       await this.save();
     }
+      */
 
     findAvgRating = async function() {
       const allReviews = await this.getReviews();
-    
+
       if (allReviews.length > 0) {
         const total = allReviews.reduce((sum, review) => sum + review.stars, 0);
         const avgRating = Number((total / allReviews.length).toFixed(1));
-    
+
         // Only update if avgRating has changed
         if (this.avgRating !== avgRating) {
           this.avgRating = avgRating; // Update average rating
@@ -36,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       } else {
         // Set default value of null if no reviews
         if (this.avgRating !== null) { // Only save if necessary
-          this.avgRating = null; 
-          await this.save(); 
+          this.avgRating = null;
+          await this.save();
         }
       }
     }
@@ -46,27 +47,27 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(models.User,{
         foreignKey: 'ownerId',
         as: 'SpotUser',
-        onDelete: 'CASCADE'        
+        onDelete: 'CASCADE'
       });
       Spot.hasMany(models.SpotImage,
         {
           foreignKey:'spotId',
           as: 'SpotImages',
-          onDelete: 'CASCADE' 
+          onDelete: 'CASCADE'
         }
       );
       Spot.hasMany(models.Review,
         {
           foreignKey:'spotId',
           as: 'Reviews',
-          onDelete: 'CASCADE' 
+          onDelete: 'CASCADE'
         }
       );
       Spot.hasMany(models.Booking,
         {
           foreignKey:'spotId',
           as: 'SpotBooking',
-          onDelete: 'CASCADE' 
+          onDelete: 'CASCADE'
         }
       );
     }
@@ -121,8 +122,20 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     previewImage:{
-      type: DataTypes.ARRAY(DataTypes.STRING)
-    }
+      type: DataTypes.STRING(50)
+    },
+    Image1:{
+      type: DataTypes.STRING(50),
+    },
+    Image2:{
+      type: DataTypes.STRING(50),
+    },
+    Image3:{
+      type: DataTypes.STRING(50),
+    },
+    Image4:{
+      type: DataTypes.STRING(50),
+    },
   }, {
     sequelize,
     modelName: 'Spot',

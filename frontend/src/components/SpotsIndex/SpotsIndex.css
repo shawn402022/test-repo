@@ -51,7 +51,13 @@
 }
 
 .spot-image {
-  width: 100%;
+  height:auto;
+  width: 200px;
+  border: 2px solid;
+  border-color: green;
+  border-radius: 5px;
+
+
 }
 
 .spot-location {

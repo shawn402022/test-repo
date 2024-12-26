@@ -12,11 +12,11 @@ module.exports = {
     await ReviewImages.bulkCreate([
       {
         reviewId: 1,
-        url: "testUrl.com"
+        url: "https://i.ibb.co/X5GYBpw/bungalow-house-exterior.jpg"
       },
       {
         reviewId: 2,
-        url: "testUrl2.com"
+        url: "https://i.ibb.co/4txgX55/luxurious-home-in-the-desert.jpg"
       }
     ], { validate: true });
   },

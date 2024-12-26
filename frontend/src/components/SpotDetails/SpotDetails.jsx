@@ -71,14 +71,10 @@ const SpotDetails = () => {
             )}
           </div>
           <div className="small-images">
-            {SpotImages &&
-              SpotImages.slice(1, 5).map((image, index) => (
-                <img
-                  key={index}
-                  src={image.url}
-                  alt={`Spot view ${index + 2}`}
-                />
-              ))}
+            <div className="image1"><img /></div>
+            <div className="image2"><img /></div>
+            <div className="image3"><img /></div>
+            <div className="image4"><img /></div>
           </div>
         </div>
 
@@ -122,7 +118,7 @@ const SpotDetails = () => {
               }
             />
           )}
-          <SpotReviews reviews={reviews} userId={user.id} spotId={spot.id}/>
+          <SpotReviews reviews={reviews} userId={user?.id} spotId={spot.id}/>
 
         </div>
       </div>

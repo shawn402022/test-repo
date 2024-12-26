@@ -444,8 +444,16 @@ router.get('/', validateQuery, async (req, res) => {
     res.status(200).json({
         Spots: allSpots,
         page,
-        size
+        size,
+        include: [{
+            model:'SpotImages',
+            as: 'SpotImages',
+            attributes: ['url', 'spotId', 'preview']
+        }],
+        raw:false,
+        nest: true
     });
+
 });
 
 //Create A spot Middleware

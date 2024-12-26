@@ -5,7 +5,7 @@ import ManageSpots from '../ManageSpots/ManageSpots';
 
 const SpotTile = ({ spot }) => {
   const navigate = useNavigate();
-  const defaultImage = 'https://i.ibb.co/WnFbjJB/villa-1.jpg';
+  const defaultImage = '';
 
   const imageUrl =
     spot.previewImage || spot.SpotImages?.[0]?.url || defaultImage;
