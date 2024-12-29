@@ -9,6 +9,7 @@ import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 import './SpotDetails.css';
 import ReviewSummary from '../ReviewSummary/ReviewSummary';
 import SpotReviews from '../SpotReviews/SpotReviews';
+import SpotThumbNail from '../SpotThumbNail/SpotThumbNail';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
@@ -36,7 +37,8 @@ const SpotDetails = () => {
     city,
     state,
     country,
-    SpotImages,
+    previewImage,
+
     avgRating,
     numReviews,
   } = spot;
@@ -66,15 +68,10 @@ const SpotDetails = () => {
         </div>
         <div className="spot-images-grid">
           <div className="main-image">
-            {SpotImages && SpotImages[0] && (
-              <img src={SpotImages[0].url} alt="Main spot view" />
-            )}
+            <img src={previewImage} className="mainPreviewImage" alt="Main spot view" />
           </div>
           <div className="small-images">
-            <div className="image1"><img /></div>
-            <div className="image2"><img /></div>
-            <div className="image3"><img /></div>
-            <div className="image4"><img /></div>
+            <SpotThumbNail spotId={spotId}/>
           </div>
         </div>
 

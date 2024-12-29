@@ -18,13 +18,20 @@
 }
 
 .spot-images-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+
   gap: 15px;
+  border:solid;
+  border-width: 10px;
   border-radius: 15px;
+  border-color:blue;
+
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(128, 100, 162, 0.5);
   transition: all 0.3s ease;
+  width: 600px;
+  height: 400px;
 }
 
 .spot-info-container {
@@ -37,12 +44,36 @@
   box-shadow: 0 8px 32px rgba(128, 100, 162, 0.5);
   transition: all 0.3s ease;
 }
-
 .main-image{
-  width: 600px;
-  height: 400px;
+  width:100px;
+  height:300px;
+  border-width: 10px;
+  border-color: green;
+  border:solid
 
 }
+
+.mainPreviewImage {
+  width: auto;
+  height: 400px;
+  object-fit: cover;
+
+}
+
+.small-images{
+  display:grid;
+  grid-template-columns: 2;
+  grid-template-rows: 2;
+  border-width: 5px;
+  border-color: yellow;
+  border:solid
+
+}
+.thumb-nail{
+  
+}
+
+
 
 .callout-box {
   display: flex;
