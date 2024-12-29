@@ -15,6 +15,7 @@ const SpotThumbNail = ({ spotId }) => {
 
     return (
         <div>
+        
             {spotImages.map((image, index) => (
                 <div key={image.id}>
                     <img
@@ -24,6 +25,7 @@ const SpotThumbNail = ({ spotId }) => {
                     />
                 </div>
             ))}
+
         </div>
     )
 }

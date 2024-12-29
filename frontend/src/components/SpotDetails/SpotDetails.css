@@ -61,16 +61,14 @@
 }
 
 .small-images{
-  display:grid;
-  grid-template-columns: 2;
-  grid-template-rows: 2;
+
+  width: 100px;
+  height: 100px;
+
   border-width: 5px;
   border-color: yellow;
   border:solid
 
-}
-.thumb-nail{
-  
 }
 
 
