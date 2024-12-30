@@ -8,35 +8,35 @@ const UPDATE_SPOT = 'spots/updateSpot';
 const DELETE_SPOT = 'spots/deleteSpot';
 
 //!ACTION CREATORS:
-const getAllSpots = (spots) => ({
+const getAllSpots = spots => ({
   type: GET_ALL_SPOTS,
   spots,
 });
 
-const getSingleSpot = (spot) => ({
+const getSingleSpot = spot => ({
   type: GET_SINGLE_SPOT,
   spot,
 });
 
-const createSpot = (spot) => ({
+const createSpot = spot => ({
   type: CREATE_SPOT,
   spot,
 });
 
-const deleteSpot = (spotId) => ({
+const deleteSpot = spotId => ({
   type: DELETE_SPOT,
   spotId,
 });
 
 //!THUNK ACTIONS:
-export const fetchAllSpotsThunk = () => async (dispatch) => {
+export const fetchAllSpotsThunk = () => async dispatch => {
   const response = await csrfFetch('/api/spots');
   const spots = await response.json();
   dispatch(getAllSpots(spots));
   return spots;
 };
 
-export const fetchSingleSpotThunk = (spotId) => async (dispatch) => {
+export const fetchSingleSpotThunk = spotId => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}`);
   const spot = await response.json();
   dispatch(getSingleSpot(spot));
@@ -44,99 +44,96 @@ export const fetchSingleSpotThunk = (spotId) => async (dispatch) => {
 };
 
 export const addSpotImageThunk = (imageData, spotId) => async () => {
-  console.log(imageData)
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: 'POST',
-        body: JSON.stringify(imageData),
-
-
-    });
-    return response
-    /*
+  console.log(imageData);
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(imageData),
+  });
+  return response;
+  /*
     const newSpot = await response.json();
     dispatch(createSpot(newSpot));
     return newSpot;
     */
 };
-export const createSpotThunk = (spotData) => async (dispatch) => {
-    const response = await csrfFetch('/api/spots', {
-        method: 'POST',
-        body: JSON.stringify(spotData),
-    });
+export const createSpotThunk = spotData => async dispatch => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    body: JSON.stringify(spotData),
+  });
 
-    const newSpot = await response.json();
-    dispatch(createSpot(newSpot));
-    return newSpot;
+  const newSpot = await response.json();
+  dispatch(createSpot(newSpot));
+  return newSpot;
 };
 
-export const updateSpotThunk = (spotId, spotData) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'PUT',
-        body: JSON.stringify(spotData),
-    });
+export const updateSpotThunk = (spotId, spotData) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    body: JSON.stringify(spotData),
+  });
 
-    const newSpot = await response.json();
-    dispatch(createSpot(newSpot));
-    return newSpot;
+  const newSpot = await response.json();
+  dispatch(createSpot(newSpot));
+  return newSpot;
 };
 
-export const deleteSpotThunk = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'DELETE'
-    });
+export const deleteSpotThunk = spotId => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'DELETE',
+  });
 
-    if (response.ok) {
-        dispatch(deleteSpot(spotId));
-        return true;
-    }
+  if (response.ok) {
+    dispatch(deleteSpot(spotId));
+    return true;
+  }
 };
-
 
 //!INITIAL STATE:
 const initialState = {
   allSpots: {},
-  singleSpot: {}
+  singleSpot: {},
 };
 
 //!REDUCERS:
 const spotsReducer = (state = initialState, action) => {
   const handlers = {
-      [GET_ALL_SPOTS]: (state, action) => {
-          const newAllSpots = {};
-          action.spots.Spots.forEach((spot) => {
-              newAllSpots[spot.id] = spot;
-          });
-          return {
-              ...state,
-              allSpots: newAllSpots,
-          };
+    [GET_ALL_SPOTS]: (state, action) => {
+      const newAllSpots = {};
+      action.spots.Spots.forEach(spot => {
+        newAllSpots[spot.id] = spot;
+      });
+      return {
+        ...state,
+        allSpots: newAllSpots,
+      };
+    },
+    [GET_SINGLE_SPOT]: (state, action) => ({
+      ...state,
+      singleSpot: action.spot,
+    }),
+    [CREATE_SPOT]: (state, action) => ({
+      ...state,
+      allSpots: {
+        ...state.allSpots,
+        [action.spot.id]: action.spot,
       },
-      [GET_SINGLE_SPOT]: (state, action) => ({
-          ...state,
-          singleSpot: action.spot,
-      }),
-      [CREATE_SPOT]: (state, action) => ({
-          ...state,
-          allSpots: {
-              ...state.allSpots,
-              [action.spot.id]: action.spot,
-          },
-      }),
-      // [UPDATE_SPOT]: (state, action) => ({
-      //     ...state,
-      //     allSpots: {
-      //         ...state.allSpots,
-      //         [action.spot.id]: action.spot,
-      //     },
-      // }),
-      [DELETE_SPOT]: (state, action) => {
-          const newAllSpots = { ...state.allSpots };
-          delete newAllSpots[action.spotId];
-          return {
-              ...state,
-              allSpots: newAllSpots,
-          };
-      },
+    }),
+    // [UPDATE_SPOT]: (state, action) => ({
+    //     ...state,
+    //     allSpots: {
+    //         ...state.allSpots,
+    //         [action.spot.id]: action.spot,
+    //     },
+    // }),
+    [DELETE_SPOT]: (state, action) => {
+      const newAllSpots = { ...state.allSpots };
+      delete newAllSpots[action.spotId];
+      return {
+        ...state,
+        allSpots: newAllSpots,
+      };
+    },
   };
   const handler = handlers[action.type];
   return handler ? handler(state, action) : state;
