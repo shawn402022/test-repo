@@ -6,7 +6,7 @@ const express = require('express');
 require('express-async-errors');
 //logs HTTP requests to server
 const morgan = require('morgan');
-//Cross-Origin Resource Sharing - allows servers to indicate valid origins from which resources may be loaded onto browser. 
+//Cross-Origin Resource Sharing - allows servers to indicate valid origins from which resources may be loaded onto browser.
 const cors = require('cors');
 //used to protect against Cross-Site Request Forgery (CSRF)
 const csurf = require('csurf');
@@ -30,7 +30,7 @@ app.use(morgan('dev')); //log info about req and res
 app.use(cookieParser());
 
 app.use(express.json()); //parsing JSON bodies of req with content-type of "application/json"
-
+//app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 
 
@@ -46,7 +46,7 @@ if (!isProduction) {
 app.use(
     helmet.crossOriginResourcePolicy({ // function allows control of which origins can embed your resources (EX:images, scripts, etc.)
       policy: "cross-origin" //cross origin means the origin of the resource is from a different protocol, domain or port number
-    })                      //ex: images loaded from another site 
+    })                      //ex: images loaded from another site
   );
 
 //MIDDLEWARE FOR CSRF PROTECTION
@@ -54,7 +54,7 @@ app.use(
 app.use(
     csurf({
       cookie: { //tells csurf to use cookies for storing the CSRF token, rather than sessions.
-        secure: isProduction, // Ensures the cookie is only transmitted over secure HTTPS connections (connection security), If isProduction is true sets the Secure flag on the cookie 
+        secure: isProduction, // Ensures the cookie is only transmitted over secure HTTPS connections (connection security), If isProduction is true sets the Secure flag on the cookie
         sameSite: isProduction && "Lax",//Controls how cookies are sent with cross-site requests, "lax" - Cookies are sent when users navigate to the origin site from external sites.
         httpOnly: true //cookie will only be sent in http
       }
@@ -72,6 +72,8 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
+
+
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
