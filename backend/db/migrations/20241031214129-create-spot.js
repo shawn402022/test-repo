@@ -37,10 +37,10 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       name: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       price: {
         type: Sequelize.FLOAT
@@ -49,19 +49,19 @@ module.exports = {
         type: Sequelize.DECIMAL(2,1)
       },
       previewImage: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       Image1: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       Image2: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       Image3: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       Image4: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(1000)
       },
       createdAt: {
         allowNull: false,
