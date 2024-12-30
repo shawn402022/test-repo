@@ -64,7 +64,8 @@ function DeleteSpot({spotId}) {
 
   const deleteSpot = (event) => {
     event.preventDefault();
-    dispatch(deleteSpotThunk(spotId));
+    return dispatch(deleteSpotThunk(spotId))
+      .then(() => dispatch(fetchAllSpotsThunk()));
   }
 
   return <button type='button' onClick={deleteSpot}>Delete</button>;

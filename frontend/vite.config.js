@@ -39,10 +39,11 @@ export default defineConfig(({ mode }) => ({
     })
   ],
   build: {
-    target: 'es2020'
+    target: ['es2015', 'chrome87', 'edge88', 'firefox78', 'safari14','esnext'],
+    outDir: 'build'
   },
   esbuild: {
-    target: 'es2020'
+    target: 'esnext'
   },
   // To automatically open the app in the browser whenever the server starts,
   // uncomment the following lines:
