@@ -38,6 +38,12 @@ export default defineConfig(({ mode }) => ({
       failOnError: mode === "production"
     })
   ],
+  build: {
+    target: 'es2020'
+  },
+  esbuild: {
+    target: 'es2020'
+  },
   // To automatically open the app in the browser whenever the server starts,
   // uncomment the following lines:
   server: {
@@ -50,4 +56,3 @@ export default defineConfig(({ mode }) => ({
     },
   }
 }));
-

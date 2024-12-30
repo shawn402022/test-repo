@@ -36,26 +36,23 @@ export const fetchAllSpotsThunk = () => async dispatch => {
   return spots;
 };
 
-export const fetchSingleSpotThunk = spotId => async dispatch => {
-  const response = await csrfFetch(`/api/spots/${spotId}`);
-  const spot = await response.json();
-  dispatch(getSingleSpot(spot));
-  return spot;
+export const fetchSingleSpotThunk = spotId => dispatch => {
+  return csrfFetch(`/api/spots/${spotId}`)
+      .then(response => response.json())
+      .then(spot => {
+          dispatch(getSingleSpot(spot));
+          return spot;
+      });
 };
 
-export const addSpotImageThunk = (imageData, spotId) => async () => {
+export const addSpotImageThunk = (imageData, spotId)  => {
   console.log(imageData);
-  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+  return csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
-    body: JSON.stringify(imageData),
-  });
-  return response;
-  /*
-    const newSpot = await response.json();
-    dispatch(createSpot(newSpot));
-    return newSpot;
-    */
+    body: JSON.stringify(imageData)
+  }).then(response => response);
 };
+
 export const createSpotThunk = spotData => async dispatch => {
   const response = await csrfFetch('/api/spots', {
     method: 'POST',

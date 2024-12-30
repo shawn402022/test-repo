@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
-import { /*useDispatch,*/ useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-//import { fetchAllSpotsThunk, deleteSpotThunk } from '../../store/spots';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import SpotTile from '../SpotTile/SpotTile';
 import './ManageSpots.css';
 
 const ManageSpots = () => {
-  //const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
   const allSpots = useSelector((state) => state.spots.allSpots);
@@ -18,18 +16,17 @@ const ManageSpots = () => {
   );
 
   useEffect(() => {
-    //fetchAllSpotsThunk();
-    //dispatch(fetchAllSpotsThunk());
+    // Your effect logic here
   }, []);
 
-
-const handleDelete = (spotId) => {
-  return () => {
-      console.log(spotId)
-      // await dispatch(deleteSpotThunk(spotId));
-      // dispatch(fetchAllSpotsThunk());
+  const handleDelete = spotId => function() {
+    console.log(spotId);
+    return Promise.resolve().then(() => {
+      // Future implementation:
+      // return dispatch(deleteSpotThunk(spotId))
+      //   .then(() => dispatch(fetchAllSpotsThunk()));
+    });
   };
-};
   if (!user) {
     navigate('/');
     return null;
