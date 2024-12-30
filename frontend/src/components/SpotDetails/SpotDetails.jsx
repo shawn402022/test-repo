@@ -1,26 +1,21 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteReviewThunk } from '../../store/reviews';
 import { fetchSingleSpotThunk } from '../../store/spots';
-import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
-import './SpotDetails.css';
 import ReviewSummary from '../ReviewSummary/ReviewSummary';
 import SpotReviews from '../SpotReviews/SpotReviews';
-import SpotThumbNail from '../SpotThumbNail/SpotThumbNail';
+import './SpotDetails.css';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
 
-  const spot = useSelector((state) => state.spots.singleSpot);
-  const user = useSelector((state) => state.session.user);
+  const spot = useSelector(state => state.spots.singleSpot);
+  const user = useSelector(state => state.session.user);
 
-  const hasReviewed = spot?.Reviews?.some(
-    (review) => review.userId === user?.id,
-  );
+  const hasReviewed = spot?.Reviews?.some(review => review.userId === user?.id);
   const Owner = spot?.Owner;
   const reviews = spot?.Reviews || [];
 
@@ -54,11 +49,6 @@ const SpotDetails = () => {
   //   return new Date(date).toLocaleDateString('en-US', options);
   // };
 
-
-
-
-
-
   return (
     <div className="spot-details">
       <div className="spot-details-container">
@@ -71,7 +61,12 @@ const SpotDetails = () => {
             <img src={previewImage} className="mainPreviewImage" alt="Main spot view" />
           </div>
           <div className="small-images">
-            <SpotThumbNail spotId={spotId}/>
+            {SpotImages &&
+              SpotImages.slice(1, 5).map((image, index) => (
+                <div key={image.id} className={`image${index + 1}`}>
+                  <img src={image.url} alt={`Spot view ${index + 1}`} />
+                </div>
+              ))}
           </div>
         </div>
 
@@ -90,7 +85,7 @@ const SpotDetails = () => {
               </div>
               <div className="rating-line">
                 <i className="fas fa-star"></i>
-                <ReviewSummary numReviews={numReviews} avgRating={avgRating}/>
+                <ReviewSummary numReviews={numReviews} avgRating={avgRating} />
               </div>
             </div>
             <button onClick={isComingSoon}>Reserve</button>
@@ -99,7 +94,7 @@ const SpotDetails = () => {
         <div className="reviews-section">
           <h2 className="reviews-header">
             <i className="fas fa-star"></i>
-            <ReviewSummary numReviews={numReviews} avgRating={avgRating}/>
+            <ReviewSummary numReviews={numReviews} avgRating={avgRating} />
           </h2>
 
           {canReview && (
@@ -115,8 +110,7 @@ const SpotDetails = () => {
               }
             />
           )}
-          <SpotReviews reviews={reviews} userId={user?.id} spotId={spot.id}/>
-
+          <SpotReviews reviews={reviews} userId={user?.id} spotId={spot.id} />
         </div>
       </div>
     </div>
