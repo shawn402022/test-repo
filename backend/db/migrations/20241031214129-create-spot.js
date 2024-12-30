@@ -19,16 +19,16 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       address: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       state: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       country: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       lat: {
         type: Sequelize.FLOAT
