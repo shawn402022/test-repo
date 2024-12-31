@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    target: ['esnext'],
+    target: ['es2015'],
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
@@ -20,6 +20,7 @@ export default defineConfig({
       }
     }
   },
+  base: './',
   server: {
     proxy: {
       '/api': {
@@ -28,5 +29,5 @@ export default defineConfig({
       },
     },
   },
-  base: '/',
+
 })
