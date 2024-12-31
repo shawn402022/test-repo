@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
         main: resolve(__dirname, 'index.html'),
       },
     },
-    target: ['es2015', 'chrome87', 'edge88', 'firefox78', 'safari14','esnext'],
+    target: ['esnext'],
     outDir: 'dist'
   },
   esbuild: {
