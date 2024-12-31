@@ -2,6 +2,7 @@
 
 //imports the Express.js framework, which is used to create web applications and APIs in Node.js
 const express = require('express');
+const path = require('path');
 //error handling for asynchronous routes and middleware
 require('express-async-errors');
 //logs HTTP requests to server
@@ -30,7 +31,15 @@ app.use(morgan('dev')); //log info about req and res
 app.use(cookieParser());
 
 app.use(express.json()); //parsing JSON bodies of req with content-type of "application/json"
-//app.use(express.static(path.join(__dirname, '../frontend/dist')));
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+}
 
 
 

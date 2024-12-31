@@ -1,41 +1,19 @@
-import { defineConfig } from 'vite';
-import { resolve } from "path";
-import react from '@vitejs/plugin-react';
-import eslint from 'vite-plugin-eslint';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-
-
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  plugins: [
-    react(),
-    eslint({
-      lintOnStart: true,
-      failOnError: mode === "production"
-    })
-  ],
+export default defineConfig({
+  plugins: [react()],
   build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-      },
-    },
-    target: ['esnext'],
     outDir: 'dist',
     assetsDir: 'assets',
+    target: ['esnext'],
   },
-  esbuild: {
-    target: 'esnext'
-  },
-  // To automatically open the app in the browser whenever the server starts,
-  // uncomment the following lines:
   server: {
-    open: true,
     proxy: {
-      '/api':{
+      '/api': {
         target: 'http://localhost:8000',
-        changeOrigin: true
-      }
+        changeOrigin: true,
+      },
     },
-  }
-}));
+  },
+})
