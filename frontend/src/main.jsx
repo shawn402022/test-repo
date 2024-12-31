@@ -9,7 +9,7 @@ import './index.css';
 
 const store = configureStore();
 
-// Create root and render application
+console.log('Initializing React application...');
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
