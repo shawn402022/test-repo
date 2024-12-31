@@ -1,4 +1,6 @@
-console.log('Starting application initialization...');
+import { logMessage } from './utils/logger';
+
+logMessage('Starting application initialization...');
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -9,12 +11,13 @@ import ModalProvider from './components/Context/ModalContext';
 import configureStore from './store/store';
 import './index.css';
 
-console.log('Imports completed successfully');
-
 const store = configureStore();
-console.log('Store configured');
+logMessage('Store configured');
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root');
+logMessage(`Root element found: ${Boolean(root)}`);
+
+ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <Provider store={store}>
       <ModalProvider>
@@ -25,4 +28,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 );
 
-console.log('Render completed');
+logMessage('Render completed');
