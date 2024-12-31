@@ -30,6 +30,10 @@ const router = createBrowserRouter([
         path: '/spots/:spotId/edit',
         element: <EditSpot />,
       },
+      {
+        path: '*',
+        element: <SpotsIndex />,
+      },
     ],
   },
 ]);
