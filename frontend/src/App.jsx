@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from '../src/Layout';
-import SpotsIndex from './components/SpotsIndex/SpotsIndex';
+import {SpotsIndex} from './components/SpotsIndex/SpotsIndex';
 import SpotDetails from './components/SpotDetails/SpotDetails';
 import ManageSpots from './components/ManageSpots/ManageSpots';
 import CreateSpot from './components/CreateSpot/CreateSpot';

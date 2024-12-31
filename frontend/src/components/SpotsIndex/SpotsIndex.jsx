@@ -6,7 +6,7 @@ import { deleteSpotThunk, fetchAllSpotsThunk } from '../../store/spots';
 import './SpotsIndex.css';
 //import * as assetImages from '../assets'
 
-const SpotsIndex = () => {
+export const SpotsIndex = () => {
   const dispatch = useDispatch();
   const allSpots = useSelector((state) => state.spots.allSpots);
   const user = useUser();
@@ -44,7 +44,7 @@ console.log(allSpots, user);
   );
 };
 
-export default SpotsIndex;
+
 
 function Actions({ spotId, isVisible = false}) {
   if(!isVisible) {
