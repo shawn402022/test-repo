@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    target: ['es2015'],
+    target: ['esnext'],
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
