@@ -1,3 +1,11 @@
+window.addEventListener('load', () => {
+  document.body.insertAdjacentHTML('beforeend',
+    `<div id="startup-log" style="position:fixed;bottom:0;left:0;background:black;color:white;padding:10px;">
+      App starting...
+    </div>`
+  );
+});
+
 import { logMessage } from './utils/logger';
 
 logMessage('Starting application initialization...');
