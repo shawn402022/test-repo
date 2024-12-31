@@ -75,10 +75,11 @@
 .spot-rating {
   color: rgba(147, 112, 219, 0.8);
 }
-  height: 280px;
+
+  /* height: 280px;
   object-fit: cover;
   border-radius: 12px;
-}
+} */
 
 .spot-details {
   margin-top: auto;
