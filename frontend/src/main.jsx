@@ -1,15 +1,19 @@
+console.log('Starting application initialization...');
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
-import  Modal  from './components/Context/Modal';
-import  ModalProvider  from './components/Context/ModalContext';
+import Modal from './components/Context/Modal';
+import ModalProvider from './components/Context/ModalContext';
 import configureStore from './store/store';
 import './index.css';
 
-const store = configureStore();
+console.log('Imports completed successfully');
 
-console.log('Initializing React application...');
+const store = configureStore();
+console.log('Store configured');
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
@@ -20,3 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+console.log('Render completed');
