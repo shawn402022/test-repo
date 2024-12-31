@@ -45,10 +45,10 @@ if (process.env.NODE_ENV === 'production') {
 
 //CORS
 //implemented by browsers to restrict web pages from making requests to a different web page.
-app.use(cors({
-  origin: isProduction || 'https://faded-bnb.onrender.com/', // replace with your frontend URL
-  credentials: true,
-}));
+if (!isProduction) {
+    // enable cors only in development
+    app.use(cors());
+}
 
 //CROSS ORIGIN POLICY (helmet)
 // helmet helps set a variety of headers to better secure your app
