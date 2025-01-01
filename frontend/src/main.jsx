@@ -1,7 +1,14 @@
+console.log('1. Script starts');
+
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('2. DOM loaded');
   const root = document.getElementById('root');
+  console.log('3. Root element:', root);
   root.innerHTML = '<div style="padding: 20px; background: red;">React Init Check</div>';
+  console.log('4. Added test div');
 });
+
+console.log('5. Before imports');
 
 import { logMessage } from './utils/logger';
 
@@ -15,6 +22,9 @@ import Modal from './components/Context/Modal';
 import ModalProvider from './components/Context/ModalContext';
 import configureStore from './store/store';
 import './index.css';
+
+
+console.log('6. After imports');
 
 const store = configureStore();
 logMessage('Store configured');
