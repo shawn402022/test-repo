@@ -10,7 +10,7 @@
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
-    "dev": "npm --prefix frontend run dev",
+    
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview"
   },
