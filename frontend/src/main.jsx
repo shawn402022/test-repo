@@ -22,17 +22,34 @@ import './index.css';
 const store = configureStore();
 logMessage('Store configured');
 
-const root = document.getElementById('root');
-logMessage(`Root element found: ${Boolean(root)}`);
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-ReactDOM.createRoot(root).render(
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div style={{padding: '20px', color: 'red'}}>Something went wrong mounting the app.</div>;
+    }
+    return this.props.children;
+  }
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ModalProvider>
-        <App />
-        <Modal />
-      </ModalProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ModalProvider>
+          <App />
+          <Modal />
+        </ModalProvider>
+      </Provider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

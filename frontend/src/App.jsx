@@ -41,11 +41,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-    
+
     <div style={{padding: '20px', background: 'lightblue'}}>
       App is mounted
     </div>
-    {/* Your existing App content */}
+    {<RouterProvider router={router} />}
   </>
 
   )
