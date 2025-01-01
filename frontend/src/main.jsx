@@ -1,21 +1,15 @@
-console.log('1. Script starts');
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('2. DOM loaded');
-  const root = document.getElementById('root');
-  console.log('3. Root element:', root);
-  root.innerHTML = '<div style="padding: 20px; background: red;">React Init Check</div>';
-  console.log('4. Added test div');
-});
-
-console.log('5. Before imports');
-
-import { logMessage } from './utils/logger';
-
-logMessage('Starting application initialization...');
+console.log('Starting React initialization');
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <div style={{background: 'blue', color: 'white', padding: '20px'}}>
+    React is mounted
+  </div>
+);
+
 import App from './App';
 import { Provider } from 'react-redux';
 import Modal from './components/Context/Modal';
@@ -46,18 +40,5 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <ModalProvider>
-          <App />
-          <Modal />
-        </ModalProvider>
-      </Provider>
-    </ErrorBoundary>
-  </React.StrictMode>
-);
 
 logMessage('Render completed');
