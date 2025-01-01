@@ -3,12 +3,23 @@ console.log('Starting React initialization');
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <div style={{background: 'blue', color: 'white', padding: '20px'}}>
-    React is mounted
-  </div>
-);
+try {
+  const rootElement = document.getElementById('root');
+  console.log('Root element found:', rootElement);
+
+  const reactRoot = ReactDOM.createRoot(rootElement);
+  console.log('React root created');
+
+  reactRoot.render(
+    <div style={{background: 'blue', color: 'white', padding: '20px'}}>
+      React is mounted
+    </div>
+  );
+  console.log('Render called');
+} catch (error) {
+  console.error('React mount error:', error);
+  document.body.innerHTML += `<div style="color: red">React Error: ${error.message}</div>`;
+}
 
 import App from './App';
 import { Provider } from 'react-redux';
