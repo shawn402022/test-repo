@@ -39,7 +39,16 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+    
+    <div style={{padding: '20px', background: 'lightblue'}}>
+      App is mounted
+    </div>
+    {/* Your existing App content */}
+  </>
+
+  )
 }
 
 export default App;
