@@ -22,12 +22,22 @@ const db = {};
 
 //SETTING UP SEQUELIZE INSTANCE/CONNECTING TO DB
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (env === 'production') {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
+    define: {
+      schema: process.env.SCHEMA
+    }
+  });
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
-
 //DYNAMICALLY LOAD ALL MODEL FILES
 //automatically read all the model files in the current directory, require them, and add them to the db object
 fs
