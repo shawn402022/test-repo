@@ -41,14 +41,10 @@ app.use((_req, res, next) => {
   next();
 });
 
-
 //CORS
 //implemented by browsers to restrict web pages from making requests to a different web page.
 
 app.use(cors());
-
-
-
 
 //CROSS ORIGIN POLICY (helmet)
 // helmet helps set a variety of headers to better secure your app
@@ -70,19 +66,16 @@ app.use(
     })
   );
 
-//This line MUST be after csurf
-app.use('/api',routes); //connect all routes to app
+// API routes must come before static file serving
+app.use(routes);
 
+// Production static file serving comes last
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-  // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
   });
 }
-
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
