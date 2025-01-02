@@ -4,15 +4,18 @@
 require('dotenv').config();
 //imports the listening port variable from config/index.js
 const { port } = require('../config');
-//imports all routes, middleware and anything else that goes through the app.js file
 const app = require('../app');
 const db = require('../db/models');
+
+console.log('Starting server with config port:', port);
+console.log('Environment PORT:', process.env.PORT);
 
 db.sequelize
   .authenticate()
   .then(() => {
     console.log('Database connection success! Sequelize is ready to use...');
     const serverPort = process.env.PORT || port;
+    console.log('Final server port:', serverPort);
     app.listen(serverPort, () => console.log(`Listening on port ${serverPort}...`));
   })
   .catch((err) => {
