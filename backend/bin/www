@@ -6,18 +6,16 @@ require('dotenv').config();
 const { port } = require('../config');
 //imports all routes, middleware and anything else that goes through the app.js file
 const app = require('../app');
-//imports all sequelize database models
 const db = require('../db/models');
 
 db.sequelize
-  .authenticate() // <---- Database Connection Check, Attempts to authenticate with the database using Sequelize
+  .authenticate()
   .then(() => {
     console.log('Database connection success! Sequelize is ready to use...');
-
-    // Start listening for connections
-    app.listen(port, () => console.log(`Listening on port ${port}...`));
+    const serverPort = process.env.PORT || port;
+    app.listen(serverPort, () => console.log(`Listening on port ${serverPort}...`));
   })
-  .catch((err) => { // <-- error handling if server cannot start
+  .catch((err) => {
     console.log('Database connection failure.');
     console.error(err);
   });
