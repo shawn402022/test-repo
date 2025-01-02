@@ -1,28 +1,22 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// For API Endpoints
+const domain = process.env.VITE_APP_API_DOMAIN || 'localhost';
+const port = process.env.VITE_APP_API_PORT || '8000';
 
 export default defineConfig({
-  plugins: [react({
-    fastRefresh: true,
-    jsxRuntime: 'automatic'
-  })],
+  plugins: [react()],
+  build: {
+    target: 'esnext',
+    outDir: 'dist'
+  },
   server: {
-    port: 5173,
-    open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: `http://${domain}:${port}`,
         changeOrigin: true,
       },
     },
   },
-  build: {
-    target: 'esnext',
-    outDir: 'dist',
-    sourcemap: true
-  },
-  esbuild: {
-    jsxInject: `import React from 'react'`
-  },
-  base: './',
-})
+});
