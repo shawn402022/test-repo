@@ -40,35 +40,41 @@ const setTokenCookie = (res, user) => {
 //RESTORE USER
 //middleware function that will restore the session user based on the contents of the JWT cookie
 const restoreUser = (req, res, next) => {
+  console.log('Starting restoreUser middleware');
   const { token } = req.cookies;
-  console.log('Token from cookies:', token);
+  console.log('Token:', token);
   req.user = null;
 
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
     if (err) {
-      console.log('JWT verification error:', err);
+      console.log('JWT Verification Error:', err);
       return next();
     }
 
     try {
       const { id } = jwtPayload.data;
-      console.log('User ID from JWT:', id);
+      console.log('Looking up user with id:', id);
       req.user = await User.findByPk(id, {
         attributes: {
           include: ['email', 'createdAt', 'updatedAt']
         }
       });
+      console.log('Found user:', req.user);
     } catch (e) {
-      console.log('User restoration error:', e);
+      console.log('User Lookup Error:', e);
       res.clearCookie('token');
       return next();
     }
 
-    if (!req.user) res.clearCookie('token');
+    if (!req.user) {
+      console.log('No user found, clearing cookie');
+      res.clearCookie('token');
+    }
 
     return next();
   });
 };
+
 
 //REQUIRE AUTH (If there is no current user, return an error)
   const requireAuth = function (req, _res, next) {
