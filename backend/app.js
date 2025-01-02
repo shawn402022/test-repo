@@ -31,47 +31,19 @@ app.use(morgan('dev')); //log info about req and res
 app.use(cookieParser());
 
 app.use(express.json()); //parsing JSON bodies of req with content-type of "application/json"
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
-}
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
-}
-
-
-// Add content-type middleware here
-app.use((_req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
-  next();
-});
-
+// Remove or comment out the following lines:
+// app.use((_req, res, next) => {
+//   res.setHeader('Content-Type', 'application/json');
+//   next();
+// });
 
 //CORS
 //implemented by browsers to restrict web pages from making requests to a different web page.
 
 app.use(cors());
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React frontend app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  // Anything that doesn't match the above, send back index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}
 
 
 //CROSS ORIGIN POLICY (helmet)
@@ -96,6 +68,19 @@ app.use(
 
 //This line MUST be after csurf
 app.use(routes); //connect all routes to app
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+}
+
+
+
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
@@ -123,6 +108,7 @@ app.use((err, _req, _res, next) => {
 });
 
 // Error formatter
+// Consolidated error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
@@ -130,7 +116,8 @@ app.use((err, _req, res, _next) => {
     title: err.title || 'Server Error',
     message: err.message,
     errors: err.errors,
-    stack: isProduction ? null : err.stack
+    stack: isProduction ? null : err.stack,
+    error: isProduction ? {} : err.stack
   });
 });
 
