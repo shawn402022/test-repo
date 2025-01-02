@@ -34,6 +34,7 @@ app.use(express.json()); //parsing JSON bodies of req with content-type of "appl
 
 
 
+
 // Add content-type middleware here
 app.use((_req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
@@ -80,6 +81,16 @@ app.use(
 //This line MUST be after csurf
 app.use(routes); //connect all routes to app
 
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+}
+
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
@@ -105,8 +116,6 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-
-
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
@@ -129,16 +138,6 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === 'production' ? {} : err.stack,
   });
 });
-
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
-}
 
 
 
