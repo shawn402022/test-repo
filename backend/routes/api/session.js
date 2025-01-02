@@ -94,22 +94,35 @@ router.delete(
 
 // Restore session user
 router.get(
-    '/',
-    (req, res) => {
+  '/',
+  (req, res) => {
+    try {
       const { user } = req;
+      console.log('Request received, user:', user); // Debug log
       if (user) {
         const safeUser = {
           id: user.id,
-          fistName:user.firstName,
-          lastName:user.lastName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           username: user.username,
         };
+        console.log('Session user found:', safeUser);
         return res.status(200).json({
           user: safeUser
         });
-      } else return res.status(200).json({ user: null });
+      } else {
+        console.log('No session user found');
+        return res.status(200).json({ user: null });
+      }
+    } catch (error) {
+      console.error('Session restore error:', error);
+      return res.status(500).json({
+        error: error.message,
+        stack: process.env.NODE_ENV === 'production' ? null : error.stack
+      });
     }
-  );
+  }
+);
 
 module.exports = router;
