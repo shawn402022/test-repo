@@ -464,6 +464,39 @@ const validateQuery = [
   handleValidationErrors,
 ];
 
+router.get('/', validateQuery, async (req, res) => {
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+  // Set defaults and parse values
+  page = parseInt(page) || 1;
+  size = parseInt(size) || 20;
+
+  const pagination = {
+    limit: size,
+    offset: size * (page - 1),
+  };
+
+  try {
+    const allSpots = await Spot.findAll(pagination);
+
+    // Process spots to ensure avgRating is a number or null
+    const processedSpots = allSpots.map(spot => {
+      const spotData = spot.toJSON();
+      spotData.avgRating = spotData.avgRating ? Number(spotData.avgRating) : null;
+      return spotData;
+    });
+
+    res.status(200).json({
+      Spots: processedSpots,
+      page,
+      size
+    });
+  } catch (error) {
+    console.error('Error fetching spots:', error);
+    res.status(500).json({ message: 'An error occurred while fetching spots' });
+  }
+}),
+
 //get all spots
 router.get('/', validateQuery, async (req, res) => {
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =

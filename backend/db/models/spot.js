@@ -115,7 +115,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     avgRating: {
-      type: DataTypes.DECIMAL(2,1),
+      type: DataTypes.FLOAT(2,1),
+      allowNull: true,
       validate:{
         min: 0,
         max: 5
