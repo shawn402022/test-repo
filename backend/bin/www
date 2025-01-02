@@ -7,16 +7,16 @@ const { port } = require('../config');
 const app = require('../app');
 const db = require('../db/models');
 
-console.log('Starting server with config port:', port);
-console.log('Environment PORT:', process.env.PORT);
+// Start server first
+const server = app.listen(process.env.PORT || port, () => {
+  console.log(`Server started on port ${process.env.PORT || port}`);
+});
 
+// Then attempt database connection
 db.sequelize
   .authenticate()
   .then(() => {
     console.log('Database connection success! Sequelize is ready to use...');
-    const serverPort = process.env.PORT || port;
-    console.log('Final server port:', serverPort);
-    app.listen(serverPort, () => console.log(`Listening on port ${serverPort}...`));
   })
   .catch((err) => {
     console.log('Database connection failure.');
