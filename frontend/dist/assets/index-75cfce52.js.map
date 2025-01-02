@@ -1,0 +1,1 @@
+{"version":3,"file":"index-75cfce52.js","sources":["../../index.html?html-proxy&index=1.js"],"sourcesContent":["\n      import * as React from 'http://localhost:5173/node_modules/react/index.js';\n      console.log('React loaded:', React);\n    "],"names":["React"],"mappings":"0wBAEM,QAAQ,IAAI,gBAAiBA,CAAK"}

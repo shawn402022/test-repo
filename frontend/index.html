@@ -11,10 +11,10 @@
     <script>
       console.log('Initial script loaded');
     </script>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="http://localhost:5173/src/main.jsx"></script>
     <script type="module">
-      import React from 'react';
-      console.log('React imported:', React);
+      import * as React from 'http://localhost:5173/node_modules/react/index.js';
+      console.log('React loaded:', React);
     </script>
   </body>
 </html>
