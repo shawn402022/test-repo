@@ -1,6 +1,6 @@
 console.log('Starting React initialization');
 
-import React from 'react';
+
 import ReactDOM from 'react-dom/client';
 
 try {

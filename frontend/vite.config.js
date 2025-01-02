@@ -2,7 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    fastRefresh: true,
+    jsxRuntime: 'automatic'
+  })],
   server: {
     port: 5173,
     open: true,
@@ -17,6 +20,9 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'dist',
     sourcemap: true
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`
   },
   base: './',
 })
