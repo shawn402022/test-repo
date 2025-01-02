@@ -136,14 +136,14 @@ app.use((err, _req, res, _next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
+  res.setHeader('Content-Type', 'application/json');
   res.status(err.status || 500);
   console.error(err);
   res.json({
     title: err.title || 'Server Error',
     message: err.message,
     errors: err.errors,
-    stack: isProduction ? null : err.stack,
-    statusCode: err.status || 500
+    stack: isProduction ? null : err.stack
   });
 });
 
