@@ -47,15 +47,7 @@ app.use((_req, res, next) => {
 
 app.use(cors());
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React frontend app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  // Anything that doesn't match the above, send back index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}
 
 
 //CROSS ORIGIN POLICY (helmet)
