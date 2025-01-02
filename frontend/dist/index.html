@@ -12,9 +12,10 @@
     <div id="root"></div>
     <div id="render-check" style="display: none;">Render Check</div>
     <script>
-      window.onload = function() {
-        document.body.innerHTML += '<div style="color: red">JavaScript is working!</div>';
-      }
+      console.log('Initial script loaded');
+      window.addEventListener('load', () => {
+        console.log('Window loaded');
+      });
     </script>
     
   </body>
