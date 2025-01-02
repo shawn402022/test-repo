@@ -9,11 +9,11 @@
   <body>
     <div id="root"></div>
     <div id="render-check" style="display: none;">Render Check</div>
-    <script>
-      console.log('Initial script loaded');
-      window.addEventListener('load', () => {
-        console.log('Window loaded');
-      });
+    <script type="module">
+      console.log('Module script running');
+      import('./src/main.jsx')
+        .then(() => console.log('main.jsx loaded'))
+        .catch(error => console.log('main.jsx error:', error));
     </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
