@@ -1,4 +1,5 @@
 // IMPORTS AND REQUIREMENTS
+const { setTokenCookie, restoreUser } = require('../../utils/auth');
 
 //imports the 'jsonwebtoken' library, used to create and verify JWTs
 const jwt = require('jsonwebtoken');
@@ -39,32 +40,35 @@ const setTokenCookie = (res, user) => {
 //RESTORE USER
 //middleware function that will restore the session user based on the contents of the JWT cookie
 const restoreUser = (req, res, next) => {
-    // token parsed from cookies
-    const { token } = req.cookies;
-    req.user = null;
+  const { token } = req.cookies;
+  console.log('Token from cookies:', token);
+  req.user = null;
 
-    return jwt.verify(token, secret, null, async (err, jwtPayload) => {
-      if (err) {
-        return next();
-      }
-
-      try {
-        const { id } = jwtPayload.data;
-        req.user = await User.findByPk(id, {
-          attributes: {
-            include: ['email', 'createdAt', 'updatedAt']
-          }
-        });
-      } catch (e) {
-        res.clearCookie('token');
-        return next();
-      }
-
-      if (!req.user) res.clearCookie('token');
-
+  return jwt.verify(token, secret, null, async (err, jwtPayload) => {
+    if (err) {
+      console.log('JWT verification error:', err);
       return next();
-    });
-  };
+    }
+
+    try {
+      const { id } = jwtPayload.data;
+      console.log('User ID from JWT:', id);
+      req.user = await User.findByPk(id, {
+        attributes: {
+          include: ['email', 'createdAt', 'updatedAt']
+        }
+      });
+    } catch (e) {
+      console.log('User restoration error:', e);
+      res.clearCookie('token');
+      return next();
+    }
+
+    if (!req.user) res.clearCookie('token');
+
+    return next();
+  });
+};
 
 //REQUIRE AUTH (If there is no current user, return an error)
   const requireAuth = function (req, _res, next) {
