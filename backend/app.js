@@ -136,15 +136,12 @@ app.use((err, _req, res, _next) => {
 
 // Error formatter
 // Error formatter
-app.use((err, _req, res, _next) => {
-  console.log('Error handler hit:', err);
-  res.set('Content-Type', 'application/json');
+app.use((err, req, res, next) => {
+  console.error(err);
   res.status(err.status || 500);
   res.json({
-    title: err.title || 'Server Error',
     message: err.message,
-    errors: err.errors,
-    stack: isProduction ? null : err.stack
+    error: process.env.NODE_ENV === 'production' ? {} : err.stack,
   });
 });
 

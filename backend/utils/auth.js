@@ -45,6 +45,11 @@ const restoreUser = (req, res, next) => {
   console.log('Token:', token);
   req.user = null;
 
+  if (!token) {
+    console.log('No token found in cookies');
+    return next();
+  }
+
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
     if (err) {
       console.log('JWT Verification Error:', err);
