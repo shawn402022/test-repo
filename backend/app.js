@@ -31,24 +31,7 @@ app.use(morgan('dev')); //log info about req and res
 app.use(cookieParser());
 
 app.use(express.json()); //parsing JSON bodies of req with content-type of "application/json"
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
-}
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
-}
 
 
 // Add content-type middleware here
@@ -122,6 +105,8 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
+
+
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
@@ -144,6 +129,16 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === 'production' ? {} : err.stack,
   });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+}
 
 
 
