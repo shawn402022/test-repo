@@ -30,7 +30,7 @@ const SpotTile = ({ spot }) => {
         </div>
         <ManageSpots/>
         <span className="rating">
-          <FaStar /> {spot.avgRating ? Number(spot.avgRating).toFixed(1) : 'New'}
+          <FaStar /> {spot.avgRating ? spot.avgRating.toFixed(2) : 'New'}
         </span>
       </div>
     </div>

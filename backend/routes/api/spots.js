@@ -468,6 +468,10 @@ const validateQuery = [
 router.get('/', validateQuery, async (req, res) => {
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
     req.query;
+spots = spots.map(spot => ({
+  ...spot,
+  avgRating: spot.avgRating ? Number(spot.avgRating) : null
+}));
 
   // Set defaults and parse values
   page = parseInt(page) || 1;
