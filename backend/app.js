@@ -79,7 +79,7 @@ app.use(
   );
 
 //This line MUST be after csurf
-app.use(routes); //connect all routes to app
+app.use('/api',routes); //connect all routes to app
 
 if (process.env.NODE_ENV === 'production') {
   // Serve static files from the React app
