@@ -98,7 +98,6 @@ router.get(
   (req, res) => {
     try {
       const { user } = req;
-      console.log('Request received, user:', user); // Debug log
       if (user) {
         const safeUser = {
           id: user.id,
@@ -107,22 +106,24 @@ router.get(
           email: user.email,
           username: user.username,
         };
-        console.log('Session user found:', safeUser);
         return res.status(200).json({
           user: safeUser
         });
       } else {
-        console.log('No session user found');
-        return res.status(200).json({ user: null });
+        return res.status(200).json({
+          user: null,
+          message: 'No active session found'
+        });
       }
     } catch (error) {
-      console.error('Session restore error:', error);
       return res.status(500).json({
+        message: 'Session restoration failed',
         error: error.message,
-        stack: process.env.NODE_ENV === 'production' ? null : error.stack
+        details: 'Check server logs for more information'
       });
     }
   }
 );
+
 
 module.exports = router;
