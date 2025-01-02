@@ -51,6 +51,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
+// Add content-type middleware here
+app.use((_req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
+
 
 //CORS
 //implemented by browsers to restrict web pages from making requests to a different web page.
