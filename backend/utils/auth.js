@@ -1,5 +1,5 @@
 // IMPORTS AND REQUIREMENTS
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+//const { setTokenCookie, restoreUser } = require('../../utils/auth');
 
 //imports the 'jsonwebtoken' library, used to create and verify JWTs
 const jwt = require('jsonwebtoken');
