@@ -95,10 +95,11 @@ router.delete(
 // Restore session user
 router.get(
   '/',
-  (req, res) => {
+  (req, res, next) => {
+    console.log('Session route hit');
+    console.log('User:', req.user);
     try {
       const { user } = req;
-      res.setHeader('Content-Type', 'application/json');
       if (user) {
         const safeUser = {
           id: user.id,
@@ -107,21 +108,15 @@ router.get(
           email: user.email,
           username: user.username,
         };
-        return res.status(200).json({
+        return res.json({
           user: safeUser
         });
       } else {
-        return res.status(200).json({
-          user: null,
-          message: 'No active session'
-        });
+        return res.json({ user: null });
       }
     } catch (error) {
-      return res.status(500).json({
-        error: true,
-        message: error.message,
-        stack: process.env.NODE_ENV === 'production' ? null : error.stack
-      });
+      console.log('Session route error:', error);
+      next(error);
     }
   }
 );

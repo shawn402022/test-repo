@@ -135,10 +135,11 @@ app.use((err, _req, res, _next) => {
 });
 
 // Error formatter
+// Error formatter
 app.use((err, _req, res, _next) => {
-  res.setHeader('Content-Type', 'application/json');
+  console.log('Error handler hit:', err);
+  res.set('Content-Type', 'application/json');
   res.status(err.status || 500);
-  console.error(err);
   res.json({
     title: err.title || 'Server Error',
     message: err.message,
@@ -146,6 +147,7 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack
   });
 });
+
 
 
 module.exports = app;
