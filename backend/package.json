@@ -9,7 +9,7 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "build": "node psql-setup-script.js",
+    "build": "node psql-setup-script.js && cd ../frontend && npm install && npm run build",
     "dev": "npm run start:development"
   },
   "keywords": [],
@@ -28,7 +28,6 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    
     "per-env": "^1.0.2",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5",

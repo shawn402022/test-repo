@@ -1,9 +1,8 @@
-//PRODUCTION/DEVELOPMENT VARIABLES FOR DB
+const config = require('./index');
 
-//imports .env variables
-const config = {
+module.exports = {
   development: {
-    storage: process.env.DB_FILE,
+    storage: config.dbFile,
     dialect: 'sqlite',
     seederStorage: 'sequelize',
     logQueryParameters: true,
@@ -24,5 +23,3 @@ const config = {
     },
   },
 };
-
-module.exports = config;
