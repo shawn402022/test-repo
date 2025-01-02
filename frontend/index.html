@@ -8,13 +8,13 @@
   </head>
   <body>
     <div id="root"></div>
-    <div id="render-check" style="display: none;">Render Check</div>
-    <script type="module">
-      console.log('Module script running');
-      import('./src/main.jsx')
-        .then(() => console.log('main.jsx loaded'))
-        .catch(error => console.log('main.jsx error:', error));
+    <script>
+      console.log('Initial script loaded');
     </script>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="module">
+      import React from 'react';
+      console.log('React imported:', React);
+    </script>
   </body>
 </html>
