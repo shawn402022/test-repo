@@ -98,6 +98,7 @@ router.get(
   (req, res) => {
     try {
       const { user } = req;
+      res.setHeader('Content-Type', 'application/json');
       if (user) {
         const safeUser = {
           id: user.id,
@@ -112,14 +113,14 @@ router.get(
       } else {
         return res.status(200).json({
           user: null,
-          message: 'No active session found'
+          message: 'No active session'
         });
       }
     } catch (error) {
       return res.status(500).json({
-        message: 'Session restoration failed',
-        error: error.message,
-        details: 'Check server logs for more information'
+        error: true,
+        message: error.message,
+        stack: process.env.NODE_ENV === 'production' ? null : error.stack
       });
     }
   }
