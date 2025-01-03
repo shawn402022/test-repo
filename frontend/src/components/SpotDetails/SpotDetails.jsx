@@ -56,21 +56,26 @@ const SpotDetails = () => {
           {city}, {state}, {country}
         </div>
         <div className="spot-images-grid">
-          <div className="main-image">
-            {SpotImages && SpotImages[0] && (
-              <img src={SpotImages[0].url} alt="Main spot view" />
-            )}
-          </div>
-          <div className="small-images">
-            {SpotImages &&
-              SpotImages.slice(1, 5).map((image, index) => (
-                <div key={image.id} className={`image${index + 1}`}>
-                  <img src={image.url} alt={`Spot view ${index + 1}`} />
-                </div>
-              ))}
-          </div>
+        <div className="main-image">
+          {SpotImages && SpotImages.length > 0 && (
+            <img
+              src={SpotImages[0].url || SpotImages[0]}
+              alt="Main spot view"
+            />
+          )}
         </div>
-
+        <div className="small-images">
+          {SpotImages &&
+            SpotImages.slice(1, 5).map((image, index) => (
+              <div key={index} className={`image${index + 1}`}>
+                <img
+                  src={image.url || image}
+                  alt={`Spot view ${index + 1}`}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
         <div className="spot-info-container">
           <div className="host-description">
             <h2>

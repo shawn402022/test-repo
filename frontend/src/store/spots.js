@@ -59,9 +59,17 @@ export const createSpotThunk = spotData => async dispatch => {
     body: JSON.stringify(spotData),
   });
 
-  const newSpot = await response.json();
-  dispatch(createSpot(newSpot));
-  return newSpot;
+  if (response.ok) {
+    const newSpot = await response.json();
+
+    // Assuming spotData.images is an array of image URLs
+    if (spotData.images && spotData.images.length > 0) {
+      newSpot.SpotImages = spotData.images.map(url => ({ url }));
+    }
+
+    dispatch(createSpot(newSpot));
+    return newSpot;
+  }
 };
 
 export const updateSpotThunk = (spotId, spotData) => async dispatch => {
@@ -115,6 +123,7 @@ const spotsReducer = (state = initialState, action) => {
         ...state.allSpots,
         [action.spot.id]: action.spot,
       },
+      singleSpot: action.spot
     }),
     // [UPDATE_SPOT]: (state, action) => ({
     //     ...state,
