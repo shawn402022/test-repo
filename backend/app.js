@@ -64,7 +64,16 @@ app.use(
         httpOnly: true //cookie will only be sent in http
       }
     })
-  );
+);
+
+// Add a route to set CSRF token
+app.get("/api/csrf/restore", (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({
+    'XSRF-Token': csrfToken
+  });
+});
 
 //This line MUST be after csurf
 app.use(routes); //connect all routes to app
