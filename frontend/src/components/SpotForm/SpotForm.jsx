@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './SpotForm.css';
 import { validateForm } from './helpers';
 import PhotoSection from './PhotoSection';
@@ -9,6 +9,15 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
   const [formData, setFormData] = useState(data);
 
   const [errors, setErrors] = useState({});
+
+  const [images, setImages] = useState(data.images || []);
+
+  useEffect(() => {
+    // Update images state when data changes (e.g., when editing an existing spot)
+    if (data.images) {
+      setImages(data.images);
+    }
+  }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +30,22 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
         return;
     }
 
-    onSubmit(formData);
+    const submissionData = {
+      ...formData,
+      images: images
+    };
+
+    onSubmit(submissionData);
+  }
+
+  const handleImageChange = (index, value) => {
+    const newImages = [...images];
+    newImages[index] = value;
+    setImages(newImages);
+  }
+
+  const addImageField = () => {
+    setImages([...images, '']);
   }
 
   return (
@@ -85,7 +109,7 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
         <section>
           <h2>Describe your place to guests</h2>
           <p>
-            Mention the best features of your space, any special amentities like
+            Mention the best features of your space, like
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
@@ -134,29 +158,28 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
           <p>Submit a link to at least one photo to publish your spot.</p>
           <input
             type="text"
-            value={formData.previewImage}
+            value={formData.previewImage || ''}
             onChange={(e) => setFormData({ ...formData, previewImage: e.target.value })}
             placeholder="Preview Image URL"
           />
           {errors.previewImage && <span className="error">{errors.previewImage}</span>}
 
-          {formData?.images?.map((image, index) => (
-            <input
-              key={index}
-              type="text"
-              value={image}
-              onChange={(e) => {
-                const newImages = [...formData.images];
-                newImages[index] = e.target.value;
-                setFormData({ ...formData, images: newImages });
-              }}
-              placeholder="Image URL"
-            />
+          {images.map((image, index) => (
+            <div key={index} className="image-input">
+              <input
+                type="text"
+                value={image}
+                onChange={(e) => handleImageChange(index, e.target.value)}
+                placeholder="Image URL"
+              />
+              {index === 0 && <span>(Preview Image)</span>}
+            </div>
           ))}
+          <button type="button" onClick={addImageField}>Add Another Image</button>
         </section>
         <button type="submit">{action} Spot</button>
       </form>
-      <PhotoSection spotId={data.id} />
+      {action === 'Edit' && <PhotoSection spotId={data.id} />}
     </div>
   );
 };
