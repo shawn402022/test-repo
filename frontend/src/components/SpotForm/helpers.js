@@ -11,5 +11,14 @@ export const validateForm = (formData) => {
     if (!formData.price) validationErrors.price = 'Price per night is required';
     if (!formData.previewImage)
       validationErrors.previewImage = 'Preview image is required';
+    else if (typeof formData.previewImage !== 'string') {
+      validationErrors.previewImage = 'Preview image must be a string URL';
+    } else {
+      try {
+        new URL(formData.previewImage);
+      } catch (e) {
+        validationErrors.previewImage = 'Preview image must be a valid URL';
+      }
+    }
     return validationErrors;
   };

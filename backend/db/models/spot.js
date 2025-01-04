@@ -122,9 +122,13 @@ module.exports = (sequelize, DataTypes) => {
         max: 5
       }
     },
+
+
     previewImage:{
       type: DataTypes.STRING(50)
     },
+
+
     Image1:{
       type: DataTypes.STRING(50),
     },

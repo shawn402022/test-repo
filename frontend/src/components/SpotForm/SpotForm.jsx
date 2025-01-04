@@ -32,7 +32,11 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
 
     const submissionData = {
       ...formData,
-      images: images
+      previewImage: formData.previewImage,
+      images: images.map(url => ({
+          url,
+          preview: false
+      }))
     };
 
     onSubmit(submissionData);

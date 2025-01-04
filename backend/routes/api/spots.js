@@ -105,11 +105,43 @@ router.post('/:spotId/images', requireAuth, restoreUser, async (req, res) => {
   }
   //grab inputs from req.body
 
-  const { url, preview } = req.body;
+  let { url, preview, previewImage, image1,image2,image3,image4  } = req.body;
   //grab user ID
   const spotId = req.params.spotId;
+
+  const imageUrl = previewImage || url;
+  const imageUrl1 = image1 || url;
+  const imageUrl2 = image2 || url;
+  const imageUrl3 = image3 || url;
+  const imageUrl4 = image4 || url;
+
+  const isPreview = previewImage ? true : preview;
+
   //create new spotImage
-  const newImage = await SpotImage.create({ url, preview, spotId });
+    const newImage = await SpotImage.create({
+    url: imageUrl.toString(),
+    url: imageUrl1.toString(),
+    url: imageUrl2.toString(),
+    url: imageUrl3.toString(),
+    url: imageUrl4.toString(),
+
+    preview: isPreview,
+    spotId
+  });
+
+    // Create additional spot images
+
+    const additionalImages = [image1, image2, image3, image4].filter(img => img);
+
+    for (let imageUrl of additionalImages) {
+      await SpotImage.create({
+        spotId: newSpot.id,
+        url: imageUrl.toString(),
+        preview: false
+      });
+    }
+
+
 
   //get all preview images
   const previews = await spot.getSpotImages({
@@ -121,13 +153,17 @@ router.post('/:spotId/images', requireAuth, restoreUser, async (req, res) => {
   //create array of urls from preview object
   const urls = previews.map(preview => preview.url);
   //assign array of urls to previewImage
-  spot.previewImage = urls;
+  spot.previewImage = urls.toString();
   await spot.save();
 
   //response
   const response = {
     id: newImage.id,
     url: newImage.url,
+    imageUrl1:newImage.image1,
+    imageUrl2:newImage.image2,
+    imageUrl3:newImage.image3,
+    imageUrl4:newImage.image4,
     preview: newImage.preview,
   };
   res.status(201).json(response);
@@ -361,7 +397,7 @@ router.put('/:spotId', requireAuth, validateEdit, async (req, res) => {
     name,
     description,
     price,
-    previewImage: [previewImage],
+    previewImage: previewImage,
   });
 
   return res.status(200).json(spot);
@@ -543,12 +579,6 @@ const validateCreate = [
   check('country')
     .exists({ checkFalsy: true })
     .withMessage('country is required'),
-  // check('lat')
-  //     .isLength({min: 6})
-  //     .withMessage("Latitude is not valid"),
-  // check('lng')
-  //     .isLength({min: 6})
-  //     .withMessage("Longitude is not valid"),
   check('description')
     .isLength({ min: 6 })
     .withMessage('Description is required'),
@@ -562,10 +592,34 @@ const validateCreate = [
 //create A Spot
 router.post('/', requireAuth, validateCreate, async (req, res) => {
   //grab inputs from body
-  const { address, city, state, country, lat, lng, name, description, price } =
+  const { previewImage, image1, image2, image3, image4,address, city, state, country, lat, lng, name, description, price } =
     req.body;
+
+  // Ensure previewImage is a string
+  if (Array.isArray(previewImage)) {
+    previewImage = previewImage[0];
+  }
+
   //get user id
   const ownerId = req.user.id;
+
+  // Ensure previewImage is a string before creating spot
+  if (previewImage && typeof previewImage === 'object') {
+    return res.status(400).json({
+      message: "Validation Error",
+      errors: { previewImage: "Preview image must be a string URL" }
+    });
+  }
+
+
+  // Extract URLs from image objects if they exist
+  const image1Url = image1?.url || image1;
+  const image2Url = image2?.url || image2;
+  const image3Url = image3?.url || image3;
+  const image4Url = image4?.url || image4;
+
+
+
   //create new spot
   const newSpot = await Spot.create({
     address,
@@ -577,8 +631,69 @@ router.post('/', requireAuth, validateCreate, async (req, res) => {
     name,
     description,
     price,
-    ownerId,
+    ownerId: req.user.id,
+    previewImage: typeof previewImage === "string" ? previewImage.toString() : null,
+    image1: image1Url,
+    image2: image2Url,
+    image3: image3Url,
+    image4: image4Url
+
   });
+
+  // Create SpotImages records
+  let spotImages = [];
+
+  // Handle preview image
+  if (previewImage) {
+    const previewSpotImage = await SpotImage.create({
+      spotId: newSpot.id,
+      url: previewImage,
+      preview: true
+    });
+    spotImages.push(previewSpotImage);
+  }
+
+  // Handle additional images
+  if (image1) {
+    const img1 = await SpotImage.create({
+      spotId: newSpot.id,
+      url: image1,
+      preview: false
+    });
+    spotImages.push(img1);
+  }
+
+  if (image2) {
+    const img2 = await SpotImage.create({
+      spotId: newSpot.id,
+      url: image2,
+      preview: false
+    });
+    spotImages.push(img2);
+  }
+
+  if (image3) {
+    const img3 = await SpotImage.create({
+      spotId: newSpot.id,
+      url: image3,
+      preview: false
+    });
+    spotImages.push(img3);
+  }
+
+  if (image4) {
+    const img4 = await SpotImage.create({
+      spotId: newSpot.id,
+      url: image4,
+      preview: false
+    });
+    spotImages.push(img4);
+  }
+
+  // Return the new spot data
+
+
+
   console.log(newSpot.city);
   const response = {
     id: newSpot.id,
@@ -592,8 +707,13 @@ router.post('/', requireAuth, validateCreate, async (req, res) => {
     name: newSpot.name,
     description: newSpot.description,
     price: newSpot.price,
+    previewImage: spotImages[0]?.url || null,
+    image1: spotImages[1]?.url || null,
+    image2: spotImages[2]?.url || null,
+    image3: spotImages[3]?.url || null,
+    image4: spotImages[4]?.url || null,
     createdAt: newSpot.createdAt,
-    updatedAt: newSpot.updatedAt,
+    updatedAt: newSpot.updatedAt
   };
   res.status(201).json(response);
 });
