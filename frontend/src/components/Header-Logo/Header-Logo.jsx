@@ -6,7 +6,7 @@ const Header = () => {
         <header className="header">
             <Link to='/'>
                 <img id='faded'
-                    src="/src/assets/faded-nb.png"
+                    src="/faded-nb.png"
                     alt="Hotspot 2.0 Logo"
                     className="logo"
 
