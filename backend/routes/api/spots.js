@@ -293,6 +293,7 @@ router.get('/:spotId', async (req, res) => {
         model: SpotImage,
         as: 'SpotImages',
         attributes: ['id', 'url', 'preview'],
+        required: false // This ensures we egt the spot even if no images
       },
       {
         model: Review,
@@ -313,6 +314,9 @@ router.get('/:spotId', async (req, res) => {
   //add numReviews to the response
   const responseData = spotDetails.toJSON();
   responseData.numReviews = spotDetails.Reviews.length;
+
+  // Ensure SpotImages is always an array
+  responseData.SpotImages = responseData.SpotImages || [];
 
   res.status(200).json(responseData);
 });
@@ -591,36 +595,21 @@ const validateCreate = [
 
 //create A Spot
 router.post('/', requireAuth, validateCreate, async (req, res) => {
-  //grab inputs from body
-  const { previewImage, image1, image2, image3, image4,address, city, state, country, lat, lng, name, description, price } =
-    req.body;
+  const {
+    previewImage,
+    images,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  } = req.body;
 
-  // Ensure previewImage is a string
-  if (Array.isArray(previewImage)) {
-    previewImage = previewImage[0];
-  }
-
-  //get user id
-  const ownerId = req.user.id;
-
-  // Ensure previewImage is a string before creating spot
-  if (previewImage && typeof previewImage === 'object') {
-    return res.status(400).json({
-      message: "Validation Error",
-      errors: { previewImage: "Preview image must be a string URL" }
-    });
-  }
-
-
-  // Extract URLs from image objects if they exist
-  const image1Url = image1?.url || image1;
-  const image2Url = image2?.url || image2;
-  const image3Url = image3?.url || image3;
-  const image4Url = image4?.url || image4;
-
-
-
-  //create new spot
+  // Create the spot first
   const newSpot = await Spot.create({
     address,
     city,
@@ -631,16 +620,9 @@ router.post('/', requireAuth, validateCreate, async (req, res) => {
     name,
     description,
     price,
-    ownerId: req.user.id,
-    previewImage: typeof previewImage === "string" ? previewImage.toString() : null,
-    image1: image1Url,
-    image2: image2Url,
-    image3: image3Url,
-    image4: image4Url
-
+    ownerId: req.user.id
   });
 
-  // Create SpotImages records
   let spotImages = [];
 
   // Handle preview image
@@ -651,50 +633,25 @@ router.post('/', requireAuth, validateCreate, async (req, res) => {
       preview: true
     });
     spotImages.push(previewSpotImage);
+
+    // Update spot's previewImage
+    newSpot.previewImage = previewImage;
+    await newSpot.save();
   }
 
-  // Handle additional images
-  if (image1) {
-    const img1 = await SpotImage.create({
-      spotId: newSpot.id,
-      url: image1,
-      preview: false
-    });
-    spotImages.push(img1);
+  // Handle array of additional images
+  if (images && Array.isArray(images)) {
+    const imagePromises = images.map(imageUrl =>
+      SpotImage.create({
+        spotId: newSpot.id,
+        url: imageUrl,
+        preview: false
+      })
+    );
+    const additionalImages = await Promise.all(imagePromises);
+    spotImages = [...spotImages, ...additionalImages];
   }
 
-  if (image2) {
-    const img2 = await SpotImage.create({
-      spotId: newSpot.id,
-      url: image2,
-      preview: false
-    });
-    spotImages.push(img2);
-  }
-
-  if (image3) {
-    const img3 = await SpotImage.create({
-      spotId: newSpot.id,
-      url: image3,
-      preview: false
-    });
-    spotImages.push(img3);
-  }
-
-  if (image4) {
-    const img4 = await SpotImage.create({
-      spotId: newSpot.id,
-      url: image4,
-      preview: false
-    });
-    spotImages.push(img4);
-  }
-
-  // Return the new spot data
-
-
-
-  console.log(newSpot.city);
   const response = {
     id: newSpot.id,
     ownerId: newSpot.ownerId,
@@ -707,15 +664,14 @@ router.post('/', requireAuth, validateCreate, async (req, res) => {
     name: newSpot.name,
     description: newSpot.description,
     price: newSpot.price,
-    previewImage: spotImages[0]?.url || null,
-    image1: spotImages[1]?.url || null,
-    image2: spotImages[2]?.url || null,
-    image3: spotImages[3]?.url || null,
-    image4: spotImages[4]?.url || null,
+    images: spotImages.map(img => ({
+      id: img.id,
+      url: img.url,
+      preview: img.preview
+    })),
     createdAt: newSpot.createdAt,
     updatedAt: newSpot.updatedAt
   };
-  res.status(201).json(response);
-});
 
-module.exports = router;
+  res.status(201).json(response);
+});module.exports = router;

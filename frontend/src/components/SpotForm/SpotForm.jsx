@@ -25,18 +25,14 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
     const validationErrors = validateForm(formData);
 
     if (Object.keys(validationErrors).length > 0) {
-      console.log("WE HAVE A ERROR");
-        setErrors(validationErrors);
-        return;
+      setErrors(validationErrors);
+      return;
     }
 
     const submissionData = {
       ...formData,
       previewImage: formData.previewImage,
-      images: images.map(url => ({
-          url,
-          preview: false
-      }))
+      images: images.filter(url => url) // Filter out empty strings
     };
 
     onSubmit(submissionData);
@@ -48,9 +44,7 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
     setImages(newImages);
   }
 
-  const addImageField = () => {
-    setImages([...images, '']);
-  }
+
 
   return (
     <div className="create-spot-form">
@@ -179,7 +173,7 @@ const SpotForm = ({action= 'Create', data, onSubmit}) => {
               {index === 0 && <span>(Preview Image)</span>}
             </div>
           ))}
-          <button type="button" onClick={addImageField}>Add Another Image</button>
+
         </section>
         <button type="submit">{action} Spot</button>
       </form>

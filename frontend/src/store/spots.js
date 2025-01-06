@@ -54,63 +54,22 @@ export const addSpotImageThunk = (imageData, spotId)  => {
 };
 
 export const createSpotThunk = spotData => async dispatch => {
-  // Create spot with only the basic spot data
-  const spotPayload = {
-    address: spotData.address,
-    city: spotData.city,
-    state: spotData.state,
-    country: spotData.country,
-    lat: spotData.lat,
-    lng: spotData.lng,
-    name: spotData.name,
-    description: spotData.description,
-    price: spotData.price
-  };
-
   try {
     const response = await csrfFetch('/api/spots', {
       method: 'POST',
-      body: JSON.stringify(spotPayload)
+      body: JSON.stringify(spotData)
     });
 
     if (response.ok) {
       const newSpot = await response.json();
-
-      // Handle preview image through separate endpoint
-      if (spotData.previewImage) {
-        await addSpotImageThunk({
-          url: spotData.previewImage,
-          preview: true,
-          previewImage: spotData.previewImage
-        }, newSpot.id);
-      }
-
-      // Handle additional images through separate endpoint
-      if (spotData.images && Array.isArray(spotData.images)) {
-        for (let imageUrl of spotData.images) {
-          if (imageUrl) {
-            await addSpotImageThunk({
-              url: imageUrl,
-              preview: false
-            }, newSpot.id);
-          }
-        }
-      }
-
-      // Fetch the complete spot with images
-      const updatedSpot = await csrfFetch(`/api/spots/${newSpot.id}`).then(res => res.json());
-      dispatch(createSpot(updatedSpot));
-      return updatedSpot;
-    } else {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to create spot');
+      dispatch(createSpot(newSpot));
+      return newSpot;
     }
   } catch (error) {
     console.error('Error in createSpotThunk:', error);
     throw error;
   }
 };
-
 
 
 
