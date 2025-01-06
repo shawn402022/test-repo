@@ -14,7 +14,7 @@ const SpotDetails = () => {
 
   const spot = useSelector(state => state.spots.singleSpot);
   const user = useSelector(state => state.session.user);
-
+  console.log('SPOT',spot);
   const hasReviewed = spot?.Reviews?.some(review => review.userId === user?.id);
   const Owner = spot?.Owner;
   const reviews = spot?.Reviews || [];
@@ -79,8 +79,8 @@ const SpotDetails = () => {
         <div className="spot-info-container">
           <div className="host-description">
             <h2>
-              {`Hosted by ${Owner?.firstName} ${Owner?.lastName}`}
-              
+              {`Hosted by ${spot?.name}`}
+
             </h2>
             <p>{description}</p>
           </div>
